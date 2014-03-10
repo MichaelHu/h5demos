@@ -1,5 +1,10 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
 body{
-    height: 1000px;
+    height: 2000px;
     background: #000;
 }
 
@@ -49,4 +54,16 @@ body{
 
 #info td{
     padding: 5px 10px;
+}
+
+#grid{
+    list-style-position: inside;
+    color: #666;
+    font-style: italic;
+}
+
+#grid li{
+    height: 49px;
+    line-height: 49px;
+    border-bottom: 1px solid #666;
 }

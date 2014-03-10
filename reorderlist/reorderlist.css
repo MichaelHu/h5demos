@@ -1,0 +1,60 @@
+#list{
+}
+
+#list dt{
+    height: 34px;
+    padding-left: 40px;
+    background-color: #f3f6f8;
+    border-bottom: 1px solid #dadde1;
+    font-size: 14px;
+    line-height: 34px;
+    color: #545454;
+}
+
+
+#list ul{
+    position: relative;
+}
+
+#list ul li{
+    position: relative;
+    height: 45px;
+    padding: 0 40px;
+    border-bottom: 1px solid #e8ecf0;
+    background-color: #fff;
+    line-height: 45px;
+    font-size: 16px;
+}
+
+#list ul li.moving{
+    z-index: 2;
+    box-shadow: 0px 0px 2px #666;
+}
+
+#list li .handle,
+#list li .delete{
+    background-image: url("./img/bg.png");
+    background-repeat: no-repeat; 
+    background-size: 50px 185px;
+    -webkit-background-size: 50px 185px;
+}
+
+#list li .delete{
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    height: 40px;
+    width: 40px;
+
+    background-position: 10px -98px;
+}
+
+#list li .handle{
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    height: 40px;
+    width: 40px;
+
+    background-position: -20px 10px;
+}
