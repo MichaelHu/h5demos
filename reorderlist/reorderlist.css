@@ -18,17 +18,22 @@
 
 #list ul li{
     position: relative;
-    height: 45px;
+    height: 44px;
     padding: 0 40px;
-    border-bottom: 1px solid #e8ecf0;
+
+    border-bottom: 1px solid #d2d4d4;
+    border-top: 1px solid #fff;
     background-color: #fff;
-    line-height: 45px;
+    line-height: 44px;
     font-size: 16px;
+
+    -webkit-user-select: none;
 }
 
 #list ul li.moving{
     z-index: 2;
-    box-shadow: 0px 0px 2px #666;
+    box-shadow: 0px 0px 4px #666;
+    background-color: #eee;
 }
 
 #list li .handle,
