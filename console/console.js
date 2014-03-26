@@ -34,10 +34,8 @@ console.info(
 
 console.log(
     [
-        '%c请将简历发送至[ '
-        , '%chudamin@baidu.com'
-        , ' %c]'
-        , '    %c（ 邮件标题请以“姓名-应聘Web前端研发工程师-来自console”命名）'
+        '%c请将简历发送至以下邮箱：\n'
+        , '%o'
     ].join("")
     , [
         'font-size:14px'
@@ -45,15 +43,16 @@ console.log(
         , 'color: #000'
     ].join(';')
     , [
-        'font-size:14px'
-        , 'line-height:28px'
-        , 'color: #0064b0'
-    ].join(';')
-    , [
-        'font-size:14px'
-        , 'line-height:28px'
-        , 'color: #000'
-    ].join(';')
+        [
+            [
+                {'Email': 'hudamin@baidu.com'}
+            ]
+        ]
+    ]
+);
+
+console.log(
+    '%c邮件标题请以“姓名-应聘Web前端研发工程师-来自console”命名'
     , [
         'font-size:14px'
         , 'line-height:28px'
@@ -61,8 +60,14 @@ console.log(
     ].join(';')
 );
 
-console.log('%c职位介绍：%o'
-    , 'color:#f00;font-weight:bold;font-size:18px;line-height:30px;'
+console.log(
+    '%c职位介绍：%o'
+    , [
+        'font-size:18px'
+        , 'font-weight:bold'
+        , 'line-height:30px'
+        , 'color: #0064b0'
+    ].join(';')
     , 'http://www.dwz.cn/fx7w1'
 );
 
