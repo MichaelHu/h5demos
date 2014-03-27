@@ -13,6 +13,10 @@
  * %c       Style formatting 
  */
 
+if(!window.console){
+    return;
+}
+
 console.info(
     '%c' + [
         ''
