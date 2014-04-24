@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=320.1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/> 
+        <title>EVENT</title>
+        <link rel="stylesheet" href="../lib/css/reset.css"/>
+        <link rel="stylesheet" href="./event.css"/>
+    </head>
+    <body>
+        <div id="desktop">
+            <b></b>
+            <span>
+                prevent: <input type="checkbox" name="prevent" /> 
+                stop: <input type="checkbox" name="stop" />
+            </span>
+
+            <div id="box">
+                <b></b>
+                <span>
+                    prevent: <input type="checkbox" name="prevent" /> 
+                    stop: <input type="checkbox" name="stop" />
+                </span>
+
+                <div id="book">
+                    <b></b>
+                    <span>
+                        prevent: <input type="checkbox" name="prevent" /> 
+                        stop: <input type="checkbox" name="stop" />
+                    </span>
+
+                    <div id="pen">
+                        <b></b>
+                        <span>
+                            <input type="button" name="pierce" value="toggle touch pierce" /><br />
+                            prevent: <input type="checkbox" name="prevent" /> 
+                            stop: <input type="checkbox" name="stop" />
+                        </span>
+                    </div>
+
+                    <div id="hidden_pen">
+                        <b></b>
+                        <span>
+                            500ms delay: <input type="checkbox" name="delay" /><br /> 
+                            prevent: <input type="checkbox" name="prevent" /> 
+                            stop: <input type="checkbox" name="stop" />
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="../lib/zepto.js"></script>
+    <script src="./event.js"></script>
+</html>
+
