@@ -1,0 +1,79 @@
+.ui-config{
+    position: absolute;
+    z-index: 2;
+    top: 42px;
+    right: 8px;
+    width: 160px;
+
+    background-color: #fafafa;
+    -webkit-border-radius: 3px;
+    -webkit-box-shadow: 0 1px 3px #666;
+}
+
+.ui-config .arrow{
+    position: absolute;
+    top: -7px;
+    right: 7px;
+    width: 0;
+    height: 0;
+    border-bottom: 8px solid #fafafa;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+}  
+
+.ui-config .list{
+}  
+
+.ui-config .list > div{
+    position: relative;
+    height: 45px;
+    padding-left: 40px;
+    border-top: 1px solid #e4e8eb;
+}
+
+.ui-config .list > div:first-child{
+    border-top: none;
+}
+
+.ui-config .list > div.pressed{
+    background-color: #e4e8f0;
+}
+
+.ui-config .list span{
+    color: #333;
+    font-size: 16px;
+    line-height: 46px;
+}
+
+.ui-config .list span.pressed{
+    color: #222;
+}
+
+.ui-config .user{
+    background-position: 12px 11px;
+}
+
+.ui-config .image-mode{
+    background-position: 14px -26px;
+}
+
+.ui-config .slide-mode{
+    background-position: 15px -58px;
+}
+
+.ui-config .mark{
+    position: absolute; 
+    right: 4px;
+    top: 2px;
+    width: 40px;
+    height: 40px;
+}
+
+.ui-config .mark.on{
+    background-position: 2px -99px;
+}
+
+.ui-config .mark.off{
+    background-position: 2px -146px;
+}
+
