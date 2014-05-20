@@ -81,7 +81,8 @@ function draw(){
     };
 
     context.save();
-    context.rotate(Math.PI * 0.1);
+    context.rotate(Math.PI * 0.08);
+    context.translate(75, -30);
 
     context.beginPath();
     context.moveTo(param.startx, param.starty);
@@ -103,6 +104,28 @@ function draw(){
     context.restore();
 
 
+    context.save();
+    context.rotate(Math.PI * 0.08);
+    context.translate(75, -30);
+
+    context.beginPath();
+    context.moveTo(param.startx, param.starty);
+    context.bezierCurveTo(
+        param.cpx1
+        , param.cpy1 + 200
+        , param.cpx2
+        , param.cpy2 + 200
+        , param.endx
+        , param.endy
+    );
+
+    context.lineTo(param.endx, param.endy + 100);
+    context.lineTo(param.startx, param.starty + 100);
+    context.closePath();
+
+    context.fillStyle = 'rgba(0, 0, 0, 0.3)';
+    context.fill();
+    context.restore();
 
 
 
