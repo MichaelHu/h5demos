@@ -1,10 +1,13 @@
 #index_view #index_view_search,
 #index_view #index_view_content{
+    /**
+     * http://www.zhangxinxu.com/study/201311/css-filter-image-blur.html
+     */
     -webkit-filter: blur(2px);
     filter: blur(2px);
 }
 
-#eye_layer_{
+#eye_layer{
     position: absolute;
     top: 0;
     left: 0;
@@ -14,3 +17,28 @@
 
     background-color: rgba(144, 144, 144, 0.3);
 }
+
+#eye_upper_edge{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+
+    background-color: #000;
+}
+
+.eye-circle{
+    position: absolute;
+    bottom: -100px;
+    left: 0;
+    right: 0;
+    height: 100px;
+
+    background-image: url("../img/eye-edge-1.png");
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: center bottom; 
+}
+
+
