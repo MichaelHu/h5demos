@@ -15,19 +15,93 @@ if(!context){
 h = canvas.height = $(window).height();
 w = canvas.width = $(window).width();
 
-function draw(){
+var frames = [
 
-    var upy = h / 2 - 20,
-        downy = h - upy; 
+{
+    delay: 60
+    , handler: frame1
+}
+
+,{
+    delay: 60
+    , handler: frame2
+}
+
+,{
+    delay: 60
+    , handler: frame3
+}
+
+,{
+    delay: 60
+    , handler: frame4
+}
+
+,{
+    delay: 60
+    , handler: frame5
+}
+
+,{
+    delay: 60
+    , handler: frame6
+}
+
+,{
+    delay: 60
+    , handler: frame7
+}
+
+,{
+    delay: 60
+    , handler: frame8
+}
+
+,{
+    delay: 60
+    , handler: frame9
+}
+
+,{
+    delay: 60
+    , handler: frame10
+}
+
+];
+
+play(frames, false);
+
+
+
+
+function eye_frame(gap, p1){
+
+    // 清除指定区域
+    var param = {
+        left: 0 
+        , top: 0 
+        , width: w 
+        , height: h 
+    };
+    context.clearRect(
+        param.left
+        , param.top
+        , param.width
+        , param.height
+    );
+
+    var upy = h / 2 - gap,
+        downy = h - upy,
+        p1 = p1 || 0; 
 
     // 贝塞尔曲线
     var param = {
         startx: 0
         , starty: upy 
         , cpx1: 100 
-        , cpy1: upy - 100 
+        , cpy1: upy - 50 - p1 
         , cpx2: w - 100 
-        , cpy2: upy - 100 
+        , cpy2: upy - 50 - p1 
         , endx: w 
         , endy: upy 
     };
@@ -55,9 +129,9 @@ function draw(){
         startx: 0
         , starty: downy 
         , cpx1: 100 
-        , cpy1: downy + 100 
+        , cpy1: downy + 50 + p1 
         , cpx2: w - 100 
-        , cpy2: downy + 100 
+        , cpy2: downy + 50 + p1 
         , endx: w 
         , endy: downy 
     };
@@ -99,7 +173,51 @@ function draw(){
 
 }
 
-draw();
+
+
+
+
+function frame1(){
+    eye_frame(-50);
+}
+
+function frame2(){
+    eye_frame(-20, 15);
+}
+
+function frame3(){
+    eye_frame(10, 30);
+}
+
+function frame4(){
+    eye_frame(40, 45);
+}
+
+function frame5(){
+    eye_frame(80, 60);
+}
+
+function frame6(){
+    eye_frame(120, 75);
+}
+
+function frame7(){
+    eye_frame(160, 75);
+}
+
+function frame8(){
+    eye_frame(200, 75);
+}
+
+function frame9(){
+    eye_frame(240, 75);
+}
+
+function frame10(){
+    eye_frame(300, 75);
+}
+
+
 
 
 });
