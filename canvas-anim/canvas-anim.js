@@ -16,14 +16,33 @@ h = canvas.height = $(window).height();
 w = canvas.width = $(window).width();
 
 var frames = [
-
 {
-    delay: 60
+    delay: 300
+    , handler: frame0
+}
+
+,{
+    delay: 100
     , handler: frame1
 }
 
 ,{
-    delay: 60
+    delay: 100
+    , handler: frame2
+}
+
+,{
+    delay: 300
+    , handler: frame0
+}
+
+,{
+    delay: 300
+    , handler: frame1
+}
+
+,{
+    delay: 120
     , handler: frame2
 }
 
@@ -176,9 +195,12 @@ function eye_frame(gap, p1){
 
 
 
+function frame0(){
+    eye_frame(-100);
+}
 
 function frame1(){
-    eye_frame(-50);
+    eye_frame(-30);
 }
 
 function frame2(){
@@ -186,11 +208,11 @@ function frame2(){
 }
 
 function frame3(){
-    eye_frame(10, 30);
+    eye_frame(-10, 30);
 }
 
 function frame4(){
-    eye_frame(40, 45);
+    eye_frame(30, 45);
 }
 
 function frame5(){
