@@ -7,9 +7,13 @@
  *        }
  *    ]
  */
-function play(frames, isLoop){
+function play(frames, isLoop, isReverse, callback){
 
 (function(){
+
+    if(isReverse){
+        frames = frames.slice(0).reverse();
+    }
 
     var currentIndex = 0;
 
@@ -36,6 +40,9 @@ function play(frames, isLoop){
                 && frame.handler();
             if(increase_index()){
                 play_frame();
+            }
+            else{
+                callback && callback();
             }
         }
 

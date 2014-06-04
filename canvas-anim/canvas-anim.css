@@ -1,9 +1,38 @@
 body{
-    min-height: 480px;
+    background-color: #000;
+}
+
+#wrapper{
+    position: relative;
+    width: 320px;
+    height: 500px;
+    margin: 20px auto 0;
+    background: url("./img/bg.jpg") repeat center center;
 }
 
 canvas{
     position: absolute;
     top: 0;
     left: 0;
+}
+
+.btn{
+    position: absolute;
+    z-index: 2;
+    top: 5px;
+    height: 20px;
+    padding: 5px;
+
+    background-color: #000;
+    color: #fff;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.open-eye{
+    left: 5px;
+}
+
+.close-eye{
+    right: 5px;
 }

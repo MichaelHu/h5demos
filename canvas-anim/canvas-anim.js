@@ -12,12 +12,13 @@ if(!context){
     return;
 }
 
-h = canvas.height = $(window).height();
-w = canvas.width = $(window).width();
+h = canvas.height = $('#wrapper').height();
+w = canvas.width = $('#wrapper').width();
 
 var frames = [
+
 {
-    delay: 300
+    delay: 100
     , handler: frame0
 }
 
@@ -28,21 +29,6 @@ var frames = [
 
 ,{
     delay: 100
-    , handler: frame2
-}
-
-,{
-    delay: 300
-    , handler: frame0
-}
-
-,{
-    delay: 300
-    , handler: frame1
-}
-
-,{
-    delay: 120
     , handler: frame2
 }
 
@@ -88,8 +74,23 @@ var frames = [
 
 ];
 
-play(frames, false);
+$('.close-eye')
+    .on('click', function(){
+        $('.close-eye').hide();
+        play(frames, false, true, function(){
+            $('.open-eye').show();
+        }); 
+    })
+    .show();
 
+$('.open-eye')
+    .on('click', function(){
+        $('.open-eye').hide();
+        play(frames, false, false, function(){
+            $('.close-eye').show();
+        }); 
+    })
+    .hide();
 
 
 
