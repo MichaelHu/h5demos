@@ -1,9 +1,9 @@
 $(function(){
 
-var canvas = new Canvas($('<canvas></canvas>').appendTo('body'));
-
 
 function drawText(){
+
+    var canvas = new Canvas($('<canvas id="c_text"></canvas>').appendTo('body'));
 
     canvas
         /*
@@ -11,7 +11,7 @@ function drawText(){
         .height($(window).height() * 0.9)
         */
         .width(640)
-        .height(1000)
+        .height(200)
 
         .font('italic bold 28px Arial')
 
@@ -46,9 +46,16 @@ function drawText(){
 
 function drawLine(){
 
+    var canvas = new Canvas($('<canvas id="c_lines"></canvas>').appendTo('body'));
+
     var randY = [];
+
+    canvas
+        .width(1280)
+        .height(400);
+
     for(var i=0; i<canvas.getWidth(); i+=60){
-        randY.push(320.5 + Math.floor(Math.random() * 200) );
+        randY.push(20.5 + Math.floor(Math.random() * 300) );
     }
 
 
@@ -57,7 +64,7 @@ function drawLine(){
         .globalAlpha(1)
         .lineWidth(2)
         .fillStyle('#7ea4b8')
-        .fillRect(0, 300, canvas.getWidth(), 220)
+        .fillRect(0, 0, canvas.getWidth(), 320)
         .restore()
         ;
 
@@ -65,14 +72,14 @@ function drawLine(){
 
     // grids
     canvas.save()
-        .globalAlpha(0.2)
+        .globalAlpha(0.4)
         .lineWidth(1)
         .strokeStyle('#f8f8f8')
         ;
-    for(var i=0, j=0; i<canvas.getWidth(); i+=60, j++){
+    for(var i=10, j=0; i<canvas.getWidth(); i+=60, j++){
         canvas
             .moveTo(i+0.5, randY[j] + 8)
-            .lineTo(i+0.5, 300.5 + 220)
+            .lineTo(i+0.5, 20.5 + 320)
             ;
     }
     canvas
@@ -92,8 +99,8 @@ function drawLine(){
         .beginPath()
         ;
 
-    for(var i=0, j=0; i<canvas.getWidth(); i+=60, j++){
-        if(0 == i){
+    for(var i=10, j=0; i<canvas.getWidth(); i+=60, j++){
+        if(10 == i){
             canvas
                 .moveTo(i+0.5, randY[j])
                 ;
@@ -119,7 +126,7 @@ function drawLine(){
         .fillStyle('#7ea4b8')
         ;
 
-    for(var i=0, j=0; i<canvas.getWidth(); i+=60, j++){
+    for(var i=10, j=0; i<canvas.getWidth(); i+=60, j++){
         canvas
             .beginPath()
             .moveTo(i+0.5+4, randY[j])
@@ -137,6 +144,39 @@ function drawLine(){
     canvas
         .restore()
         ;
+
+
+    var initTouchX, initPos, isBusy = false;
+    canvas.on('touchstart', function(e){
+            console.log('touchstart');
+            initTouchX 
+                = e.targetTouches[0].clientX;
+            initPos = $(e.target).offset();
+        })
+        .on('touchmove', function(e){
+            var t = e.targetTouches[0],
+                offsetX;
+
+            e.preventDefault();
+
+            offsetX = t.clientX - initTouchX;
+            console.log(offsetX);
+
+            if(isBusy){
+                return;
+            }
+            isBusy = true;
+            setTimeout(function(){ isBusy = false; }, 20);
+
+            $(canvas.canvas).css({
+                '-webkit-transform': 'translate(' + ( initPos.left - 0 + offsetX ) + 'px, 0px)',
+            });
+        })
+        .on('touchend', function(e){
+            console.log('touchend');
+        });
+
+        
 }
 
 setTimeout(function(){

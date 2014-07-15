@@ -1,11 +1,21 @@
 body{
+    width: 320px;
+    overflow: hidden;
     /*
     background-color: #999;
 */
 }
 
-canvas{
+canvas {
     width: 320px;
-    height: 500px;
+}
+
+#c_text{
+    height: 100px;
+}
+
+#c_lines{
+    width: 640px;
+    height: 200px;
 }
 
