@@ -1,4 +1,11 @@
 body{
+    /*
     background-color: #999;
+*/
+}
+
+canvas{
+    width: 320px;
+    height: 500px;
 }
 
