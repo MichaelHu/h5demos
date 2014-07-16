@@ -1,9 +1,8 @@
 body{
     width: 320px;
     overflow: hidden;
-    /*
-    background-color: #999;
-*/
+    background-color: #b9e3e0;
+    background-color: #000;
 }
 
 canvas {
@@ -15,6 +14,11 @@ canvas {
 }
 
 #c_lines{
+    width: 640px;
+    height: 200px;
+}
+
+#c_lines2{
     width: 640px;
     height: 200px;
 }
