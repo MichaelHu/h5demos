@@ -313,6 +313,11 @@ fn.prototype = {
         return this;
     }
 
+    ,css: function(){
+        $.fn.css.apply($(this.canvas), arguments);
+        return this;
+    }
+
 
 };
 

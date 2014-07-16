@@ -19,7 +19,6 @@ canvas {
 }
 
 #c_lines2{
-    width: 640px;
-    height: 200px;
+    background-color: #222;
 }
 

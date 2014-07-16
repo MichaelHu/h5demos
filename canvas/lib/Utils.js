@@ -93,3 +93,25 @@ function get_intersect_between_line_and_circle(line, circle){
 }
 
 
+function get_data_range(data){
+    var range = {}, min, max;
+    
+    for(var i=0; i<data.length; i++){
+        if(0 == i){
+            min = max = data[i];
+        }
+        else{
+            if(data[i] < min){
+                min = data[i];
+            } 
+            if(data[i] > max){
+                max = data[i];
+            }
+        }
+    }
+
+    range.min = min;
+    range.span = max - min;
+
+    return range;
+}

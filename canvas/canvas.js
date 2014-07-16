@@ -183,20 +183,74 @@ function drawLine(){
 }
 
 
+function randomData(min, max, count){
+    var ret = [], 
+        _min = Math.min(min, max),
+        _max = Math.max(min, max);
+
+    for(var i=0; i<count; i++){
+        ret.push(
+            _min + ( _max - _min ) * Math.random()
+        );
+    }
+
+    return ret;
+}
+
+
+
 
 function drawLine2(){
 
     var canvas = new Canvas($('<canvas id="c_lines2"></canvas>').appendTo('body'));
 
-    var X = [], randY = [];
+
+
+    var option = {
+        data: randomData(10, 3000, 100)
+    };
+
+
+
+
+    var canvasWidth = 5120, canvasHeight = 300;
+    var margin = {top:20, right:20, bottom:20, left:20};
+    var padding = {top:20, right:20, bottom:20, left:20};
+
+
+
+    // background area
+    var drawArea = {
+            x: margin.left
+            , y: margin.top
+            , w: canvasWidth - margin.left - margin.right
+            , h: canvasHeight - margin.top - margin.bottom
+        }; 
+    var range = get_data_range(option.data);
+    var ratio = range.span / ( drawArea.h - padding.top - padding.bottom ); 
+    var step = ( drawArea.w - padding.left - padding.right ) / ( option.data.length - 1 );
+    var X = [], Y = [];
+
 
     canvas
-        .width(1280)
-        .height(400);
+        .width(canvasWidth)
+        .height(canvasHeight)
+        .css({
+            width: canvasWidth / 2 + 'px'
+            , height: canvasHeight / 2 + 'px' 
+        })
+        ;
 
-    for(var i=0; i<canvas.getWidth(); i+=60){
-        X.push(10 + i + 0.5); 
-        randY.push(20.5 + Math.floor(Math.random() * 300) );
+    
+
+    for(var i=0,j=0; j<option.data.length; i+=step, j++){
+        X.push(drawArea.x + padding.left + i + 0.5); 
+        Y.push(
+            drawArea.y 
+            + drawArea.h 
+            - padding.bottom 
+            - ( option.data[j] - range.min ) / ratio 
+        );
     }
 
 
@@ -205,7 +259,7 @@ function drawLine2(){
         .globalAlpha(0.5)
         .lineWidth(2)
         .fillStyle('#7ea4b8')
-        .fillRect(0, 0, canvas.getWidth(), 320)
+        .fillRect(drawArea.x, drawArea.y, drawArea.w, drawArea.h)
         .restore()
         ;
 
@@ -219,8 +273,8 @@ function drawLine2(){
         ;
     for(var i=0; i<X.length; i++){
         canvas
-            .moveTo(X[i], randY[i] + 8)
-            .lineTo(X[i], 20.5 + 320)
+            .moveTo(X[i], Y[i] + 8)
+            .lineTo(X[i], drawArea.y + drawArea.h)
             ;
     }
     canvas
@@ -241,8 +295,8 @@ function drawLine2(){
     for(var i=0; i<X.length; i++){
         canvas
             .beginPath()
-            .moveTo(X[i]+8, randY[i])
-            .arc(X[i], randY[i], 8, 0, 2 * Math.PI, false)
+            .moveTo(X[i]+8, Y[i])
+            .arc(X[i], Y[i], 8, 0, 2 * Math.PI, false)
             .closePath()
             .stroke()
             ;
@@ -266,11 +320,11 @@ function drawLine2(){
         toPoint = {x:0, y:0};
 
     for(var i=1; i<X.length; i++){
-        fromCircle = {a: X[i-1], c: randY[i-1], r: 8}; 
-        toCircle = {a: X[i], c: randY[i], r: 8}; 
+        fromCircle = {a: X[i-1], c: Y[i-1], r: 8}; 
+        toCircle = {a: X[i], c: Y[i], r: 8}; 
         line = get_line_with_2points(
-            {x: X[i-1], y: randY[i-1]}
-            , {x: X[i], y: randY[i]}
+            {x: X[i-1], y: Y[i-1]}
+            , {x: X[i], y: Y[i]}
         );
 
         intersects = get_intersect_between_line_and_circle(line, fromCircle); 
@@ -288,10 +342,10 @@ function drawLine2(){
 
         /*
         console.log([
-                '[' + X[i-1] + ',' + randY[i-1] + ']'        
+                '[' + X[i-1] + ',' + Y[i-1] + ']'        
                 , '[' + fromPoint.x + ',' + fromPoint.y + ']'        
                 , '[' + toPoint.x + ',' + toPoint.y + ']'        
-                , '[' + X[i] + ',' + randY[i] + ']'        
+                , '[' + X[i] + ',' + Y[i] + ']'        
             ].join(' ')
         );
         */
@@ -343,12 +397,34 @@ function drawLine2(){
 }
 
 
+function drawLine3(){
+    var lineChart = new LineChart({
+            data: randomData(300, 1000, 10) 
+            , canvasWidth: 1280
+            , canvasHeight: 400
+
+            , enableGrids: false
+            , enableLines: true
+            , enableIntersect: true
+            , enableBackground: true
+            , enableAxis: false
+        });
+
+    lineChart.opt.canvas.css('background-color', 'rgba(100, 100, 100, 0.5)');
+    lineChart.draw();
+}
+
+
 
 
 setTimeout(function(){
+    /*
     drawText();
     drawLine();
     drawLine2();
+    */
+    
+    drawLine3();
 }, 300);
 
 
