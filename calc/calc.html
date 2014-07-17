@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>How Much I Can Get?</title>
+<style type="text/css">
+html *{
+    padding: 0;
+    margin: 0;
+}
+
+input, button{
+    height: 30px;
+    width: 50px;
+    font: normal 20px/30px Arial;
+}
+
+button {
+    height: 34px;
+    line-height: 34px;
+}
+
+form, div, .info{
+    font: bold 26px/50px Arial;
+    text-align: center;
+    color: red;
+}
+
+
+</style>
+</head>
+<body>
+    <form>
+        <input id="price" type="text" value="191"/>
+        <input id="ratio" type="text" value="6"/>
+        <button id="calc">Calc</button>
+    </form>
+    <div class="info" id="info_share"></div>
+    <div class="info" id="info_option"></div>
+    <div class="info" id="info_all"></div>
+
+<script type="text/javascript" src="../lib/zepto.js"></script>
+<script>
+function calc(){
+    var price = $('#price').val() - 0
+        , ratio = $('#ratio').val() - 0
+        , share_all = 490
+        , share_current = 109
+        , option_all = 670
+        , option_current = 168
+        , option_base = 106
+
+        , share_all_get
+        , share_current_get
+        , option_all_get
+        , option_current_get
+
+        , all_get
+        , current_get
+        ;
+
+    share_all_get = share_all * price * ratio; 
+    share_current_get = share_current * price * ratio; 
+    option_all_get = option_all * ( price - option_base ) * 3 * ratio;  
+    option_current_get = option_current * ( price - option_base ) * 3 * ratio;  
+
+    all_get = share_all_get + option_all_get;
+    current_get = share_current_get + option_current_get;
+
+    $('#info_share').html('share: ' + share_current_get + ' / ' + share_all_get);
+    $('#info_option').html('option: ' + option_current_get + ' / ' + option_all_get);
+    $('#info_all').html('all: ' + current_get + ' / ' + all_get);
+
+    return false;
+}
+
+$('form').on('submit', calc);
+</script>
+</body> 
+</html>
