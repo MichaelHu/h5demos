@@ -399,18 +399,25 @@ function drawLine2(){
 
 function drawLine3(){
     var lineChart = new LineChart({
-            data: randomData(300, 400, 8) 
-            , labels: ['7.2', '7.3', '7.4', '7.5', '7.6', '7.7', '7.8', '7.9']
+            data: randomData(300, 400, 20) 
+            , labels: [
+                '7.2', '7.3', '7.4', '7.5', '7.6', '7.7', '7.8', '7.9', '7.10', '7.11', 
+                '7.12', '7.13', '7.14', '7.15', '7.16', '7.17', '7.18', '7.19', '7.20', '7.21' 
+            ]
+
+            , offsetX: 0
 
             , canvas: new Canvas($('<canvas/>').appendTo('#chart_cont'))
-            , canvasWidth: 960
+            , canvasWidth: 2560
             , canvasHeight: 400
 
-            , enableGrids: false
+            , enableGrids: true
             , enableLines: true
             , enableIntersect: true
             , enableBackground: true
             , enableAxis: true
+
+            , enableTouchTrace: false
 
             , marginLeft: 0
             , marginRight: 0

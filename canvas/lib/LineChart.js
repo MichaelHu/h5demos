@@ -27,6 +27,7 @@ $.extend(fn, {
             , enableLabels: true
 
             , enableDrag: true
+            , enableTouchTrace: true
             
             // cavas size
             , canvasWidth: 640
@@ -84,6 +85,8 @@ $.extend(fn, {
             
             // Canvas Object
             , canvas: null 
+
+            , offsetX: 0
         };
 
         opt = me.opt;
@@ -124,9 +127,6 @@ $.extend(fn, {
         opt.step = ( opt.drawArea.w - opt.paddingLeft - opt.paddingRight ) 
             / ( opt.data.length - 1 );
 
-        // init coordinates
-        me.initCoordinates();
-
         me.initCanvas();
     }         
 
@@ -153,6 +153,12 @@ $.extend(fn, {
                 - ( opt.data[j] - opt.range.min ) / opt.ratio 
             );
         }
+
+        for(var i=0; i<X.length; i++){
+            X[i] += opt.offsetX;
+        }
+
+        return me;
     }
 
     , initCanvas: function(){
@@ -209,16 +215,17 @@ $.extend(fn, {
 
         for(var i=0; i<X.length; i++){
             canvas
+                .beginPath()
                 .moveTo(X[i] + 0.5, Y[i] + opt.intersectRadius + 0.5)
                 .lineTo(
                     X[i] + 0.5
                     , opt.drawArea.y + opt.drawArea.h - opt.paddingBottom + 0.5
                 )
+                .stroke()
                 ;
         }
 
         canvas
-            .stroke()
             .restore()
             ;
 
@@ -242,6 +249,7 @@ $.extend(fn, {
             .lineWidth(opt.axisLineWidth)
             .strokeStyle(opt.axisStrokeStyle)
 
+            .beginPath()
             .moveTo(
                 opt.drawArea.x + opt.paddingLeft + 0.5
                 , opt.drawArea.y + opt.paddingTop + 0.5
@@ -285,7 +293,7 @@ $.extend(fn, {
             .fillStyle(opt.labelFillStyle)
             ;
 
-        for(var i=0, x=opt.drawArea.x + opt.paddingLeft; 
+        for(var i=0, x=opt.drawArea.x + opt.paddingLeft + opt.offsetX; 
             i<labels.length; i++, x+=labelStep){
                 canvas.fillText(labels[i], x, y + opt.labelPaddingTop);
         }
@@ -305,6 +313,14 @@ $.extend(fn, {
         }
 
         canvas.save()
+            .beginPath()
+            .rect(
+                opt.drawArea.x + opt.paddingLeft - 8
+                , opt.drawArea.y + opt.paddingTop
+                , opt.drawArea.w - opt.paddingLeft - opt.paddingRight
+                , opt.drawArea.h - opt.paddingTop - opt.paddingBottom
+            )
+            .clip()
             .globalAlpha(opt.intersectOpacity)
             .lineWidth(opt.intersectLineWidth)
             .strokeStyle(opt.intersectStrokeStyle)
@@ -338,6 +354,14 @@ $.extend(fn, {
         }
 
         canvas.save()
+            .beginPath()
+            .rect(
+                opt.drawArea.x + opt.paddingLeft
+                , opt.drawArea.y + opt.paddingTop
+                , opt.drawArea.w - opt.paddingLeft - opt.paddingRight
+                , opt.drawArea.h - opt.paddingTop - opt.paddingBottom
+            )
+            .clip()
             .globalAlpha(opt.linesOpacity)
             .lineWidth(opt.linesLineWidth)
             .strokeStyle(opt.linesStrokeStyle)
@@ -382,34 +406,48 @@ $.extend(fn, {
     }
 
     , draw: function(){
-        var me = this;
+        var me = this,
+            opt = me.opt;
+
         
-        me.drawBackground()
+        opt.canvas
+            .clearRect(0, 0, opt.canvasWidth, opt.canvasHeight)
+            ;
+
+        me.initCoordinates()
+            .drawBackground()
             .drawAxis()
             .drawGrids()
-            .drawIntersections()
             .drawLines()
+            .drawIntersections()
             .drawLabels()
 
             .setupDrag()
             ;
+
+        return;
+        setTimeout(function(){
+            opt.offsetX += 10;
+            me.draw();
+        }, 50);
     } 
 
     , setupDrag: function(){
 
         var me = this, 
             opt = me.opt,
-            initTouchX, initPos, isBusy = false,
+            lastTouchX
+            isBusy = false,
             canvas = opt.canvas;
 
-        if(!opt.enableDrag){
+        if(!opt.enableDrag || me.isRedraw){
             return;
         }
+        me.isRedraw = true;
 
         canvas.on('touchstart', function(e){
-                initTouchX 
+                lastTouchX 
                     = e.targetTouches[0].clientX;
-                initPos = $(e.target).offset();
             })
             .on('touchmove', function(e){
                 var t = e.targetTouches[0],
@@ -417,33 +455,41 @@ $.extend(fn, {
 
                 e.preventDefault();
 
-                offsetX = t.clientX - initTouchX;
+                if(!opt.enableTouchTrace){
+                    return;
+                }
+
+                offsetX = t.clientX - lastTouchX;
+                lastTouchX = t.clientX;
 
                 if(isBusy){
                     return;
                 }
                 isBusy = true;
-                setTimeout(function(){ isBusy = false; }, 20);
+                setTimeout(function(){ isBusy = false; }, 60);
 
-                $(canvas.canvas).css({
-                    '-webkit-transform': 'translate(' + ( initPos.left - 0 + offsetX ) + 'px, 0px)',
-                });
+                opt.offsetX += offsetX;
+                /*
+                if(offsetX < 0){
+                    opt.offsetX -= 40;
+                }
+                else{
+                    opt.offsetX += 40;
+                }
+                */
+                me.draw();
             })
             .on('touchend', function(e){
-            });
+                var t = e.changedTouches[0],
+                    offsetX;
 
-        var $canvas = $(canvas.canvas),
-            $mask = $('<div class="mask"></div>');
+                if(opt.enableTouchTrace){
+                    return;
+                }
 
-        $mask.appendTo($canvas.parent())
-            .css({
-                height: ( opt.drawArea.h - opt.paddingTop - opt.paddingBottom ) / 2 + 'px'
-                , width: opt.drawArea.x / 2 + opt.paddingLeft / 2 + 'px'
-                , position: 'absolute'
-                , top: opt.drawArea.y / 2 + opt.paddingTop / 2 + 'px' 
-                // , left: opt.drawArea.x / 2 + 'px' 
-                , left: 0 
-                , 'background-color': opt.backgroundColor
+                offsetX = t.clientX - lastTouchX;
+                opt.offsetX += offsetX;
+                me.draw();
             });
 
         return this;
