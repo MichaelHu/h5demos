@@ -24,6 +24,9 @@ $.extend(fn, {
             , enableBackground: true
             , enableLines: true
             , enableIntersect: true
+            , enableLabels: true
+
+            , enableDrag: true
             
             // cavas size
             , canvasWidth: 640
@@ -69,7 +72,15 @@ $.extend(fn, {
             , linesLineWidth: 2
             , linesStrokeStyle: '#ffffff'
 
+            // labels
+            , labelFont: 'normal normal 28px Serif' 
+            , labelTextAlign: 'center' 
+            , labelTextBaseline: 'top'
+            , labelFillStyle: '#e0e0e0'
+            , labelPaddingTop: 8 
+
             , data: []
+            , labels: []
             
             // Canvas Object
             , canvas: null 
@@ -134,7 +145,7 @@ $.extend(fn, {
             Y = opt.Y = [];
          
         for(var i=0,j=0; j<opt.data.length; i+=opt.step, j++){
-            X.push(opt.drawArea.x + opt.paddingLeft + i + 0.5); 
+            X.push(opt.drawArea.x + opt.paddingLeft + i); 
             Y.push(
                 opt.drawArea.y 
                 + opt.drawArea.h 
@@ -251,6 +262,37 @@ $.extend(fn, {
         return this;
     }
 
+    , drawLabels: function(){
+        var me = this, 
+            opt = me.opt,
+            canvas = opt.canvas,
+            labels = opt.labels,
+            labelStep,
+            x,
+            y = opt.drawArea.y + opt.drawArea.h - opt.paddingBottom;
+        
+        if(!opt.enableLabels){
+            return this;
+        }
+
+        labelStep = ( opt.drawArea.w - opt.paddingLeft - opt.paddingRight ) 
+            / ( labels.length - 1 );
+
+        canvas
+            .font(opt.labelFont)
+            .textAlign(opt.labelTextAlign)
+            .textBaseline(opt.labelTextBaseline)
+            .fillStyle(opt.labelFillStyle)
+            ;
+
+        for(var i=0, x=opt.drawArea.x + opt.paddingLeft; 
+            i<labels.length; i++, x+=labelStep){
+                canvas.fillText(labels[i], x, y + opt.labelPaddingTop);
+        }
+
+        return this;
+    }
+
     , drawIntersections: function(){
         var me = this, 
             opt = me.opt,
@@ -347,8 +389,66 @@ $.extend(fn, {
             .drawGrids()
             .drawIntersections()
             .drawLines()
+            .drawLabels()
+
+            .setupDrag()
             ;
     } 
+
+    , setupDrag: function(){
+
+        var me = this, 
+            opt = me.opt,
+            initTouchX, initPos, isBusy = false,
+            canvas = opt.canvas;
+
+        if(!opt.enableDrag){
+            return;
+        }
+
+        canvas.on('touchstart', function(e){
+                initTouchX 
+                    = e.targetTouches[0].clientX;
+                initPos = $(e.target).offset();
+            })
+            .on('touchmove', function(e){
+                var t = e.targetTouches[0],
+                    offsetX;
+
+                e.preventDefault();
+
+                offsetX = t.clientX - initTouchX;
+
+                if(isBusy){
+                    return;
+                }
+                isBusy = true;
+                setTimeout(function(){ isBusy = false; }, 20);
+
+                $(canvas.canvas).css({
+                    '-webkit-transform': 'translate(' + ( initPos.left - 0 + offsetX ) + 'px, 0px)',
+                });
+            })
+            .on('touchend', function(e){
+            });
+
+        var $canvas = $(canvas.canvas),
+            $mask = $('<div class="mask"></div>');
+
+        $mask.appendTo($canvas.parent())
+            .css({
+                height: ( opt.drawArea.h - opt.paddingTop - opt.paddingBottom ) / 2 + 'px'
+                , width: opt.drawArea.x / 2 + opt.paddingLeft / 2 + 'px'
+                , position: 'absolute'
+                , top: opt.drawArea.y / 2 + opt.paddingTop / 2 + 'px' 
+                // , left: opt.drawArea.x / 2 + 'px' 
+                , left: 0 
+                , 'background-color': opt.backgroundColor
+            });
+
+        return this;
+
+    }
 
 });
 

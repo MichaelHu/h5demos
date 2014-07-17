@@ -399,15 +399,31 @@ function drawLine2(){
 
 function drawLine3(){
     var lineChart = new LineChart({
-            data: randomData(300, 1000, 10) 
-            , canvasWidth: 1280
+            data: randomData(300, 400, 8) 
+            , labels: ['7.2', '7.3', '7.4', '7.5', '7.6', '7.7', '7.8', '7.9']
+
+            , canvas: new Canvas($('<canvas/>').appendTo('#chart_cont'))
+            , canvasWidth: 960
             , canvasHeight: 400
 
             , enableGrids: false
             , enableLines: true
             , enableIntersect: true
             , enableBackground: true
-            , enableAxis: false
+            , enableAxis: true
+
+            , marginLeft: 0
+            , marginRight: 0
+                
+            , paddingRight: 320 
+
+            , intersectLineWidth: 5
+            , intersectRadius: 6
+
+            , linesLineWidth: 4
+
+            , paddingLeft: 40
+            , paddingBottom: 40
         });
 
     lineChart.opt.canvas.css('background-color', 'rgba(100, 100, 100, 0.5)');
