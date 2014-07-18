@@ -26,12 +26,16 @@ $.extend(fn, {
             , enableIntersect: true
             , enableLabels: true
 
+            // drag
             , enableDrag: true
             , enableTouchTrace: true
+            , dragAccelerate: 3
             
             // cavas size
             , canvasWidth: 640
             , canvasHeight: 480
+
+            , step: 100
 
             // draw area margin
             , marginTop: 20 
@@ -54,12 +58,12 @@ $.extend(fn, {
 
             // axis
             , axisOpacity: 0.4
-            , axisLineWidth: 1
+            , axisLineWidth: 2 // no less than 2, hide while redraw otherwise
             , axisStrokeStyle: '#f8f8f8'
 
             // grid
             , gridOpacity: 0.4
-            , gridLineWidth: 1
+            , gridLineWidth: 2
             , gridStrokeStyle: '#f8f8f8'
 
             // intersect
@@ -86,10 +90,17 @@ $.extend(fn, {
             // Canvas Object
             , canvas: null 
 
-            , offsetX: 0
+            // offset between line chart start point and canvas start point
+            , offsetX: 0 
+
+            // do not draw on hidden area, it's a speedup config item
+            , noDrawHiddenArea: true
         };
 
         opt = me.opt;
+
+        // make sure intersect is visible
+        opt.offsetX = opt.intersectRadius;
 
         $.extend(opt, options);
 
@@ -124,8 +135,11 @@ $.extend(fn, {
 
         opt.ratio = opt.range.span 
             / ( opt.drawArea.h - opt.paddingTop - opt.paddingBottom ); 
+
+        /*
         opt.step = ( opt.drawArea.w - opt.paddingLeft - opt.paddingRight ) 
             / ( opt.data.length - 1 );
+        */
 
         me.initCanvas();
     }         
@@ -208,12 +222,27 @@ $.extend(fn, {
         }
 
         canvas.save()
+            .beginPath()
+            .rect(
+                opt.drawArea.x + opt.paddingLeft
+                , opt.drawArea.y + opt.paddingTop
+                , opt.drawArea.w - opt.paddingLeft - opt.paddingRight
+                , opt.drawArea.h - opt.paddingTop - opt.paddingBottom
+            )
+            .clip()
             .globalAlpha(opt.gridOpacity)
             .lineWidth(opt.gridLineWidth)
             .strokeStyle(opt.gridStrokeStyle)
             ;
 
         for(var i=0; i<X.length; i++){
+
+            if(opt.noDrawHiddenArea
+                && ( X[i] < 0 && X[i] + opt.step < 0
+                    || X[i] > opt.canvasWidth && X[i] - opt.canvasWidth > opt.step) ){
+                continue;
+            }
+
             canvas
                 .beginPath()
                 .moveTo(X[i] + 0.5, Y[i] + opt.intersectRadius + 0.5)
@@ -283,10 +312,19 @@ $.extend(fn, {
             return this;
         }
 
-        labelStep = ( opt.drawArea.w - opt.paddingLeft - opt.paddingRight ) 
+        labelStep = ( opt.step * ( opt.data.length - 1 ) ) 
             / ( labels.length - 1 );
 
         canvas
+            .save()
+            .beginPath()
+            .rect(
+                opt.drawArea.x + opt.paddingLeft
+                , opt.drawArea.y + opt.drawArea.h - opt.paddingBottom 
+                , opt.drawArea.w - opt.paddingLeft - opt.paddingRight
+                , opt.paddingBottom
+            )
+            .clip()
             .font(opt.labelFont)
             .textAlign(opt.labelTextAlign)
             .textBaseline(opt.labelTextBaseline)
@@ -295,8 +333,16 @@ $.extend(fn, {
 
         for(var i=0, x=opt.drawArea.x + opt.paddingLeft + opt.offsetX; 
             i<labels.length; i++, x+=labelStep){
+                if(opt.noDrawHiddenArea
+                    && ( x < 0 && x + labelStep < 0
+                        || x > opt.canvasWidth && x - opt.canvasWidth > labelStep ) ){
+                    continue;
+                }
                 canvas.fillText(labels[i], x, y + opt.labelPaddingTop);
         }
+
+        canvas
+            .restore();
 
         return this;
     }
@@ -315,7 +361,7 @@ $.extend(fn, {
         canvas.save()
             .beginPath()
             .rect(
-                opt.drawArea.x + opt.paddingLeft - 8
+                opt.drawArea.x + opt.paddingLeft
                 , opt.drawArea.y + opt.paddingTop
                 , opt.drawArea.w - opt.paddingLeft - opt.paddingRight
                 , opt.drawArea.h - opt.paddingTop - opt.paddingBottom
@@ -327,6 +373,13 @@ $.extend(fn, {
             ;
 
         for(var i=0; i<X.length; i++){
+
+            if(opt.noDrawHiddenArea
+                && (X[i] < 0 && X[i] + opt.step < 0
+                    || X[i] > opt.canvasWidth && X[i] - opt.canvasWidth > opt.step)){
+                continue;
+            }
+
             canvas
                 .beginPath()
                 .moveTo(X[i]+opt.intersectRadius, Y[i])
@@ -372,6 +425,13 @@ $.extend(fn, {
             toPoint = {x:0, y:0};
 
         for(var i=1; i<X.length; i++){
+
+            if(opt.noDrawHiddenArea
+                && (X[i-1] < 0 && X[i-1] + opt.step < 0
+                    || X[i] > opt.canvasWidth && X[i] - opt.canvasWidth > opt.step ) ){
+                continue;
+            }
+
             fromCircle = {a: X[i-1], c: Y[i-1], r: opt.intersectRadius}; 
             toCircle = {a: X[i], c: Y[i], r: opt.intersectRadius}; 
             line = get_line_with_2points(
@@ -405,13 +465,67 @@ $.extend(fn, {
         return me;
     }
 
+    , checkTime: function(){
+        var me = this;
+
+        me.timeRenderStart = new Date().getTime();
+        return me;
+    }
+
+    , showFPS: function(){
+        var me = this,
+            now = new Date().getTime(),
+            fps = 1 / ( now + 1 - me.timeRenderStart ) * 1000,
+            fpsArr;
+
+        fpsArr = me.fpsArr = me.fpsArr || [];
+
+        fpsArr.push(fps);
+
+        me.$info = me.$info
+            || $('<div class="__line-chart-fps"></div>')
+                    .appendTo('body')
+                    .css({
+                        'position': 'absolute'
+                        , 'display': 'none'
+                        , 'top': '5px'
+                        , 'right': '10px'
+                        , 'padding': '0 5px'
+                        , 'background-color': 'rgba(0,0,0,0.3)'
+                        , 'height': '28px'
+                        , 'color': '#fff'
+                        , 'font': 'normal normal 14px/28px Arial'
+                    });
+
+        setTimeout(function(){
+            var total = 0, _fps = 0;
+            for(var i=0; i<fpsArr.length; i++){
+                total += fpsArr[i];
+            }
+
+            if(fpsArr.length){
+                _fps = total / fpsArr.length;
+            }
+
+            me.$info.show().html('fps: ' + parseInt(_fps));
+        }, 1000);
+
+        return me;
+    }
+
     , draw: function(){
         var me = this,
             opt = me.opt;
 
+        me.checkTime();
         
         opt.canvas
-            .clearRect(0, 0, opt.canvasWidth, opt.canvasHeight)
+            .clearRect(
+                opt.drawArea.x
+                , opt.drawArea.y
+                , opt.drawArea.w
+                , opt.drawArea.h
+            )
             ;
 
         me.initCoordinates()
@@ -421,11 +535,13 @@ $.extend(fn, {
             .drawLines()
             .drawIntersections()
             .drawLabels()
+            .showFPS()
 
             .setupDrag()
             ;
 
         return;
+
         setTimeout(function(){
             opt.offsetX += 10;
             me.draw();
@@ -466,9 +582,9 @@ $.extend(fn, {
                     return;
                 }
                 isBusy = true;
-                setTimeout(function(){ isBusy = false; }, 60);
+                setTimeout(function(){ isBusy = false; }, 40);
 
-                opt.offsetX += offsetX;
+                opt.offsetX += opt.dragAccelerate * offsetX;
                 /*
                 if(offsetX < 0){
                     opt.offsetX -= 40;

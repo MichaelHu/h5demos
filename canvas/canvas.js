@@ -405,24 +405,22 @@ function drawLine3(){
                 '7.12', '7.13', '7.14', '7.15', '7.16', '7.17', '7.18', '7.19', '7.20', '7.21' 
             ]
 
-            , offsetX: 0
-
             , canvas: new Canvas($('<canvas/>').appendTo('#chart_cont'))
-            , canvasWidth: 2560
+            , canvasWidth: 640
             , canvasHeight: 400
 
-            , enableGrids: true
+            , enableGrids: false
             , enableLines: true
             , enableIntersect: true
             , enableBackground: true
             , enableAxis: true
 
-            , enableTouchTrace: false
+            , enableTouchTrace: true
 
             , marginLeft: 0
             , marginRight: 0
                 
-            , paddingRight: 320 
+            , paddingRight: 40 
 
             , intersectLineWidth: 5
             , intersectRadius: 6
