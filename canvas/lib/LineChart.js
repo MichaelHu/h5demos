@@ -98,7 +98,7 @@ $.extend(fn, {
             , canvas: null 
 
             // offset between line chart start point and canvas start point
-            , offsetX: 0 
+            , initOffsetX: 0 
 
             // do not draw on hidden area, it's a speedup config item
             , noDrawHiddenArea: true
@@ -106,10 +106,10 @@ $.extend(fn, {
 
         opt = me.opt;
 
-        // make sure intersect is visible
-        opt.offsetX = opt.intersectRadius;
-
         $.extend(opt, options);
+
+        // make sure intersect is visible
+        opt._offsetX = opt.initOffsetX;
 
 
         // check error
@@ -176,7 +176,7 @@ $.extend(fn, {
         }
 
         for(var i=0; i<X.length; i++){
-            X[i] += opt.offsetX;
+            X[i] += opt._offsetX;
         }
 
         return me;
@@ -390,7 +390,7 @@ $.extend(fn, {
             .fillStyle(opt.labelFillStyle)
             ;
 
-        for(var i=0, x=opt.drawArea.x + opt.paddingLeft + opt.offsetX; 
+        for(var i=0, x=opt.drawArea.x + opt.paddingLeft + opt._offsetX; 
             i<labels.length; i++, x+=labelStep){
                 if(opt.noDrawHiddenArea
                     && ( x < 0 && x + labelStep < 0
@@ -611,7 +611,7 @@ $.extend(fn, {
         return;
 
         setTimeout(function(){
-            opt.offsetX += 10;
+            opt._offsetX += 10;
             me.draw();
         }, 50);
     } 
@@ -635,7 +635,7 @@ $.extend(fn, {
             })
             .on('touchmove', function(e){
                 var t = e.targetTouches[0],
-                    offsetX;
+                    offsetX, offsetXToBe, w;
 
                 e.preventDefault();
 
@@ -652,15 +652,23 @@ $.extend(fn, {
                 isBusy = true;
                 setTimeout(function(){ isBusy = false; }, 40);
 
-                opt.offsetX += opt.dragAccelerate * offsetX;
-                /*
-                if(offsetX < 0){
-                    opt.offsetX -= 40;
+                
+                offsetXToBe = opt._offsetX + opt.dragAccelerate * offsetX;
+                w = opt.step * ( opt.data.length - 1 );
+
+                if(offsetXToBe < opt.intersectRadius 
+                    && offsetXToBe + w < opt.marginLeft + opt.paddingLeft + opt.step){
+                    opt._offsetX = - w + opt.marginLeft + opt.paddingLeft + opt.step; 
+                    console.log('rightmost');
+                }
+                else if(offsetXToBe >= opt.intersectRadius) {
+                    opt._offsetX = opt.initOffsetX;
+                    console.log('leftmost');
                 }
                 else{
-                    opt.offsetX += 40;
+                    opt._offsetX = offsetXToBe;
                 }
-                */
+
                 me.draw();
             })
             .on('touchend', function(e){
@@ -672,7 +680,7 @@ $.extend(fn, {
                 }
 
                 offsetX = t.clientX - lastTouchX;
-                opt.offsetX += offsetX;
+                opt._offsetX += offsetX;
                 me.draw();
             });
 

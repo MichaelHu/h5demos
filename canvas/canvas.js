@@ -412,7 +412,7 @@ function drawLine3(){
             , enableGrids: false
             , enableLines: true
             , enableIntersect: true
-            , enableBackground: true
+            , enableBackground: false
             , enableAxis: true
 
             , enableTouchTrace: true
@@ -425,13 +425,15 @@ function drawLine3(){
             , intersectLineWidth: 5
             , intersectRadius: 6
 
+            , initOffsetX: 6 + 5 + 24
+
             , linesLineWidth: 4
 
             , paddingLeft: 40
             , paddingBottom: 40
         });
 
-    lineChart.opt.canvas.css('background-color', 'rgba(100, 100, 100, 0.5)');
+    // lineChart.opt.canvas.css('background-color', 'rgba(100, 100, 100, 0.5)');
     lineChart.draw();
 }
 
