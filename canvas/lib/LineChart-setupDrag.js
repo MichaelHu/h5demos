@@ -6,7 +6,7 @@ LineChart.fn.setupDrag = function(){
         _lastOffsetX,
         canvas = opt.canvas;
 
-    if(!opt.enableDrag || me.isRedraw){
+    if(!opt.enableDrag || me.isRedraw || opt.data.length <= 1){
         return;
     }
     me.isRedraw = true;

@@ -10,7 +10,8 @@ LineChart.fn.drawCurrentValue = function(){
         baseLine = 'bottom',
         offsetY = opt.currentValueOffsetY;
     
-    if(!opt.enableCurrentValue){
+    if(!opt.enableCurrentValue
+        || i == opt.data.length - 1){
         return me;
     }
 

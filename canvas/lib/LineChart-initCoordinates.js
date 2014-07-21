@@ -11,6 +11,9 @@ LineChart.fn.initCoordinates = function(){
             - opt.paddingBottom 
             - ( opt.data[j] - opt.range.min ) / opt.ratio 
         );
+
+        // @note: console.log has strong impact on FPS 
+        // console.log(X[j] + ',' + Y[j]);
     }
 
     for(var i=0; i<X.length; i++){

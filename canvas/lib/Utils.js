@@ -110,8 +110,20 @@ function get_data_range(data){
         }
     }
 
-    range.min = min;
-    range.span = max - min;
+    if(data.length){
+        range.min = min;
+        range.span = max - min;
+
+        // especially when span is zero
+        if(range.span == 0){
+            range.min -= 50;
+            range.max += 50;
+            range.span = 100; 
+        }
+    }
+    else{
+        throw new Error('get_data_range: data can not be empty');
+    }
 
     return range;
 }

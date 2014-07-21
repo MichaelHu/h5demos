@@ -490,6 +490,54 @@ function drawLine3(){
 
     // lineChart.opt.canvas.css('background-color', 'rgba(100, 100, 100, 0.5)');
     lineChart2.draw();
+
+
+
+
+
+    var lineChart3 = new LineChart({
+            data: randomData(2, 10000, 1) 
+            , labels: [
+                '7.21'
+            ]
+
+            , canvas: new Canvas($('<canvas/>').appendTo('#chart_cont'))
+            , canvasWidth: 640
+            , canvasHeight: 400
+
+            , enableGrids: true
+            , enableLines: true
+            , enableIntersect: true
+            , enableBackground: false
+            , enableAxis: true
+
+            , enableTouchTrace: true
+            , enableFPS: false
+
+            , currentValueOffsetY: -20
+
+            , marginLeft: 0
+            , marginRight: 0
+                
+            , paddingRight: 40 
+
+            , intersectLineWidth: 5
+            , intersectRadius: 6
+
+            , initOffsetX: 6 + 5 + 44
+
+            , linesLineWidth: 4
+
+            , paddingTop: 60
+            , paddingLeft: 40
+            , paddingBottom: 40
+
+            , step: 100
+        });
+
+    // lineChart.opt.canvas.css('background-color', 'rgba(100, 100, 100, 0.5)');
+    lineChart3.draw();
+
 }
 
 
