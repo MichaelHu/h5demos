@@ -21,6 +21,8 @@ LineChart.fn.draw = function(){
         .drawLines()
         .drawIntersections()
         .drawLabels()
+        .drawCurrentLabel()
+        .drawLastLabel()
         .showFPS()
 
         .setupDrag()

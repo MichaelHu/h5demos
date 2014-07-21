@@ -27,6 +27,9 @@ $.extend(fn, {
             , enableIntersect: true
             , enableLabels: true
             , enableLastGrid: true
+            , enableCurrentLabel: true
+            , enableLastLabel: true
+            , enableFPS: true
 
             // drag
             , enableDrag: true
@@ -85,7 +88,7 @@ $.extend(fn, {
             , currentPointtLineWidth: 6 
             , currentPointStrokeStyle: '#ffffff' 
             , currentPointRadius: 10 
-            , currentPointThreshold: 20
+            , currentLabelOffsetY: -10
 
             // lines
             , linesOpacity: 1
@@ -98,6 +101,24 @@ $.extend(fn, {
             , labelTextBaseline: 'top'
             , labelFillStyle: '#e0e0e0'
             , labelPaddingTop: 8 
+
+            // current label
+            , currentLabelFont: 'normal normal 28px Arial'
+            , currentLabelTextAlign: 'center'
+            , currentLabelFillStyle: '#ffffff'
+            , currentLabelOffsetY: -20 
+            , currentLabelThreshold: 28 + 20
+
+            // last label
+            , lastLabelFont: 'normal normal 28px Arial'
+            , lastLabelTextAlign: 'center'
+            , lastLabelBackgroundColor: '#ffffff'
+            , lastLabelFillStyle: 'rgba(0,0,0,0.4)'
+            , lastLabelOffsetY: -30 
+            , lastLabelThreshold: 28 + 30
+            , lastLabelPaddingHorizontal: 6  
+            , lastLabelPaddingVertical: 6  
+            , lastLabelHeight: 40
 
             , data: []
             , labels: []
@@ -120,6 +141,7 @@ $.extend(fn, {
         opt._offsetX = opt.initOffsetX;
 
         opt._currentPoint = 0;
+        opt._currentPointThreshold = parseInt( opt.step / 2 );
 
 
         // check error

@@ -399,23 +399,26 @@ function drawLine2(){
 
 function drawLine3(){
     var lineChart = new LineChart({
-            data: randomData(300, 400, 20) 
+            data: randomData(3, 9000, 31) 
             , labels: [
-                '7.2', '7.3', '7.4', '7.5', '7.6', '7.7', '7.8', '7.9', '7.10', '7.11', 
-                '7.12', '7.13', '7.14', '7.15', '7.16', '7.17', '7.18', '7.19', '7.20', '7.21' 
+                '7.1', '7.2', '7.3', '7.4', '7.5', '7.6', '7.7', '7.8', '7.9', '7.10', '7.11', 
+                '7.12', '7.13', '7.14', '7.15', '7.16', '7.17', '7.18', '7.19', '7.20', '7.21', 
+                '7.22', '7.23', '7.24', '7.25', '7.26', '7.27', '7.28', '7.29', '7.30', '7.31' 
             ]
 
             , canvas: new Canvas($('<canvas/>').appendTo('#chart_cont'))
             , canvasWidth: 640
             , canvasHeight: 400
 
-            , enableGrids: false
+            , enableGrids: true
             , enableLines: true
             , enableIntersect: true
-            , enableBackground: false
+            , enableBackground: true
             , enableAxis: true
 
             , enableTouchTrace: true
+
+            , currentLabelOffsetY: -20
 
             , marginLeft: 0
             , marginRight: 0
@@ -425,16 +428,68 @@ function drawLine3(){
             , intersectLineWidth: 5
             , intersectRadius: 6
 
-            , initOffsetX: 6 + 5 + 24
+            , initOffsetX: 6 + 5 + 44
 
             , linesLineWidth: 4
 
+            , paddingTop: 60
             , paddingLeft: 40
             , paddingBottom: 40
+
+            , step: 100
         });
 
     // lineChart.opt.canvas.css('background-color', 'rgba(100, 100, 100, 0.5)');
     lineChart.draw();
+
+
+
+
+
+
+    var lineChart2 = new LineChart({
+            data: randomData(2, 10000, 20) 
+            , labels: [
+                '7.2', '7.3', '7.4', '7.5', '7.6', '7.7', '7.8', '7.9', '7.10', '7.11', 
+                '7.12', '7.13', '7.14', '7.15', '7.16', '7.17', '7.18', '7.19', '7.20', '7.21' 
+            ]
+
+            , canvas: new Canvas($('<canvas/>').appendTo('#chart_cont'))
+            , canvasWidth: 640
+            , canvasHeight: 400
+
+            , enableGrids: true
+            , enableLines: true
+            , enableIntersect: true
+            , enableBackground: false
+            , enableAxis: true
+
+            , enableTouchTrace: true
+            , enableFPS: false
+
+            , currentLabelOffsetY: -20
+
+            , marginLeft: 0
+            , marginRight: 0
+                
+            , paddingRight: 40 
+
+            , intersectLineWidth: 5
+            , intersectRadius: 6
+
+            , initOffsetX: 6 + 5 + 44
+
+            , linesLineWidth: 4
+
+            , paddingTop: 60
+            , paddingLeft: 40
+            , paddingBottom: 40
+
+            , step: 100
+        });
+
+    // lineChart.opt.canvas.css('background-color', 'rgba(100, 100, 100, 0.5)');
+    lineChart2.draw();
 }
 
 

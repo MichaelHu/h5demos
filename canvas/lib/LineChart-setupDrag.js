@@ -2,8 +2,8 @@ LineChart.fn.setupDrag = function(){
 
     var me = this, 
         opt = me.opt,
-        lastTouchX
-        isBusy = false,
+        lastTouchX,
+        _lastOffsetX,
         canvas = opt.canvas;
 
     if(!opt.enableDrag || me.isRedraw){
@@ -29,38 +29,56 @@ LineChart.fn.setupDrag = function(){
             offsetX = t.clientX - lastTouchX;
             lastTouchX = t.clientX;
 
-            if(isBusy){
+            if(me.isBusy){
                 return;
             }
-            isBusy = true;
-            setTimeout(function(){ isBusy = false; }, 40);
+            me.isBusy = true;
+            setTimeout(function(){ me.isBusy = false; }, 40);
 
             
             offsetXToBe = opt._offsetX + opt.dragAccelerate * offsetX;
             w = opt.step * ( opt.data.length - 1 );
 
+            _lastOffsetX = opt._offsetX;
             if(offsetXToBe < opt.initOffsetX 
                 && offsetXToBe + w <= opt.step + opt.initOffsetX){
                 opt._offsetX = - w + opt.step + opt.initOffsetX; 
-                console.log('rightmost');
+                // console.log('rightmost');
             }
             else if(offsetXToBe >= opt.initOffsetX) {
                 opt._offsetX = opt.initOffsetX;
-                console.log('leftmost');
+                // console.log('leftmost');
             }
             else{
                 opt._offsetX = offsetXToBe;
             }
 
             if(Math.abs ( (opt._offsetX - opt.initOffsetX) % opt.step ) 
-                    < opt.currentPointThreshold){
+                    < opt._currentPointThreshold){
                 currentPoint 
                     = Math.abs( parseInt( ( opt._offsetX - opt.initOffsetX) / opt.step ) );
-                console.log('current ' + currentPoint); 
-                opt._currentPoint = currentPoint;
+
+                // when swipe left, make sure current point is visible
+                if(offsetX < 0){
+                    opt._currentPoint = currentPoint + 1;
+
+                }
+                else{
+                    opt._currentPoint = currentPoint;
+                }
+
+                // last point is not marked
+                if(opt._currentPoint == opt.data.length - 1
+                    && opt._currentPoint >= 0){
+                    opt._currentPoint --;
+                }
+
             }
 
-            me.draw();
+            // ignore no-need redraw
+            if(_lastOffsetX != opt._offsetX){
+                me.draw();
+            }
         })
         .on('touchend', function(e){
             var t = e.changedTouches[0],

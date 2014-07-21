@@ -7,9 +7,14 @@ LineChart.fn.checkTime = function(){
 
 LineChart.fn.showFPS = function(){
     var me = this,
+        opt = me.opt,
         now = new Date().getTime(),
         fps = 1 / ( now + 1 - me.timeRenderStart ) * 1000,
         fpsArr;
+
+    if(!opt.enableFPS){
+        return me;
+    }
 
     fpsArr = me.fpsArr = me.fpsArr || [];
 
