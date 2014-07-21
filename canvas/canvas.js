@@ -418,7 +418,7 @@ function drawLine3(){
 
             , enableTouchTrace: true
 
-            , currentLabelOffsetY: -20
+            , currentValueOffsetY: -20
 
             , marginLeft: 0
             , marginRight: 0
@@ -467,7 +467,7 @@ function drawLine3(){
             , enableTouchTrace: true
             , enableFPS: false
 
-            , currentLabelOffsetY: -20
+            , currentValueOffsetY: -20
 
             , marginLeft: 0
             , marginRight: 0

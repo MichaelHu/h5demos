@@ -27,8 +27,8 @@ $.extend(fn, {
             , enableIntersect: true
             , enableLabels: true
             , enableLastGrid: true
-            , enableCurrentLabel: true
-            , enableLastLabel: true
+            , enableCurrentValue: true
+            , enableLastValue: true
             , enableFPS: true
 
             // drag
@@ -102,23 +102,23 @@ $.extend(fn, {
             , labelFillStyle: '#e0e0e0'
             , labelPaddingTop: 8 
 
-            // current label
-            , currentLabelFont: 'normal normal 28px Arial'
-            , currentLabelTextAlign: 'center'
-            , currentLabelFillStyle: '#ffffff'
-            , currentLabelOffsetY: -20 
-            , currentLabelThreshold: 28 + 20
+            // current value
+            , currentValueFont: 'normal normal 28px Arial'
+            , currentValueTextAlign: 'center'
+            , currentValueFillStyle: '#ffffff'
+            , currentValueOffsetY: -20 
+            , currentValueThreshold: 28 + 20
 
-            // last label
-            , lastLabelFont: 'normal normal 28px Arial'
-            , lastLabelTextAlign: 'center'
-            , lastLabelBackgroundColor: '#ffffff'
-            , lastLabelFillStyle: 'rgba(0,0,0,0.4)'
-            , lastLabelOffsetY: -30 
-            , lastLabelThreshold: 28 + 30
-            , lastLabelPaddingHorizontal: 6  
-            , lastLabelPaddingVertical: 6  
-            , lastLabelHeight: 40
+            // last value
+            , lastValueFont: 'normal normal 28px Arial'
+            , lastValueTextAlign: 'center'
+            , lastValueBackgroundColor: '#ffffff'
+            , lastValueFillStyle: 'rgba(0,0,0,0.4)'
+            , lastValueOffsetY: -30 
+            , lastValueThreshold: 28 + 30
+            , lastValuePaddingHorizontal: 6  
+            , lastValuePaddingVertical: 6  
+            , lastValueHeight: 40
 
             , data: []
             , labels: []

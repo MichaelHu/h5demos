@@ -1,4 +1,4 @@
-LineChart.fn.drawCurrentLabel = function(){
+LineChart.fn.drawCurrentValue = function(){
     var me = this, 
         opt = me.opt,
         canvas = opt.canvas,
@@ -8,9 +8,9 @@ LineChart.fn.drawCurrentLabel = function(){
         y,
         i = opt._currentPoint,
         baseLine = 'bottom',
-        offsetY = opt.currentLabelOffsetY;
+        offsetY = opt.currentValueOffsetY;
     
-    if(!opt.enableCurrentLabel){
+    if(!opt.enableCurrentValue){
         return me;
     }
 
@@ -18,7 +18,7 @@ LineChart.fn.drawCurrentLabel = function(){
     // x = opt.drawArea.x + opt.paddingLeft + 60;
     y = Y[i];
 
-    if(y - opt.drawArea.y - opt.paddingTop < opt.currentLabelThreshold){
+    if(y - opt.drawArea.y - opt.paddingTop < opt.currentValueThreshold){
         baseLine = 'top';
         offsetY *= -1;
     } 
@@ -33,10 +33,10 @@ LineChart.fn.drawCurrentLabel = function(){
             , opt.drawArea.h - opt.paddingTop - opt.paddingBottom
         )
         .clip()
-        .font(opt.currentLabelFont)
-        .textAlign(opt.currentLabelTextAlign)
+        .font(opt.currentValueFont)
+        .textAlign(opt.currentValueTextAlign)
         .textBaseline(baseLine)
-        .fillStyle(opt.currentLabelFillStyle)
+        .fillStyle(opt.currentValueFillStyle)
         .fillText(parseInt(opt.data[i]), x, y + offsetY)
         .restore();
 

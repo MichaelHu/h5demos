@@ -1,4 +1,4 @@
-LineChart.fn.drawLastLabel = function(){
+LineChart.fn.drawLastValue = function(){
     var me = this, 
         opt = me.opt,
         canvas = opt.canvas,
@@ -8,26 +8,26 @@ LineChart.fn.drawLastLabel = function(){
         y,
         i = opt.data.length - 1,
         baseLine = 'top',
-        offsetY = opt.lastLabelOffsetY,
-        labelHeight = opt.lastLabelHeight,
+        offsetY = opt.lastValueOffsetY,
+        valueHeight = opt.lastValueHeight,
         offset,
         arrowOffset,
         arrowTopOffset,
-        label = parseInt(opt.data[i]),
+        value = parseInt(opt.data[i]),
         textWidth;
     
-    if(!opt.enableLastLabel){
+    if(!opt.enableLastValue){
         return me;
     }
 
     x = X[i];
     y = Y[i];
 
-    offset = offsetY - labelHeight;
-    arrowOffset = offset + labelHeight;
-    arrowTopOffset = offset + labelHeight + 7;
+    offset = offsetY - valueHeight;
+    arrowOffset = offset + valueHeight;
+    arrowTopOffset = offset + valueHeight + 7;
 
-    if(y - opt.drawArea.y - opt.paddingTop < opt.lastLabelThreshold){
+    if(y - opt.drawArea.y - opt.paddingTop < opt.lastValueThreshold){
         offset = -offsetY;
         arrowOffset = offset; 
         arrowTopOffset = offset - 7; 
@@ -44,21 +44,21 @@ LineChart.fn.drawLastLabel = function(){
         )
         .clip()
 
-        .font(opt.lastLabelFont)
-        .textAlign(opt.lastLabelTextAlign)
+        .font(opt.lastValueFont)
+        .textAlign(opt.lastValueTextAlign)
         .textBaseline(baseLine)
-        .fillStyle(opt.lastLabelBackgroundColor)
+        .fillStyle(opt.lastValueBackgroundColor)
         ;
 
-    textWidth = canvas.getTextWidth(label);
+    textWidth = canvas.getTextWidth(value);
 
     canvas
         .beginPath()
         .rect(
-            x - textWidth / 2 - opt.lastLabelPaddingHorizontal  
+            x - textWidth / 2 - opt.lastValuePaddingHorizontal  
             , y + offset 
-            , textWidth + opt.lastLabelPaddingHorizontal * 2 
-            , labelHeight 
+            , textWidth + opt.lastValuePaddingHorizontal * 2 
+            , valueHeight 
         )
         .fill()
         .beginPath()
@@ -77,8 +77,8 @@ LineChart.fn.drawLastLabel = function(){
         .closePath()
         .fill()
 
-        .fillStyle(opt.lastLabelFillStyle)
-        .fillText(label, x, y + offset + opt.lastLabelPaddingVertical)
+        .fillStyle(opt.lastValueFillStyle)
+        .fillText(value, x, y + offset + opt.lastValuePaddingVertical)
         .restore();
 
     return me;
