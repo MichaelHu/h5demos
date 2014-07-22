@@ -2,7 +2,7 @@ LineChart.fn.draw = function(){
     var me = this,
         opt = me.opt;
 
-    if(!me.isFakeDraw){
+    if(!me.isFakeDraw && !$.os.ios /* $.os.android is undefined on some Android devices */){
         me.isFakeDraw = true;
         /**
          * An no side effects draw, only make the real draw be executed in another thread 
@@ -12,7 +12,7 @@ LineChart.fn.draw = function(){
         me.fakeDraw();
         setTimeout(function(){
             me.draw();
-        }, 0);
+        }, 10);
         return;
     }
 
