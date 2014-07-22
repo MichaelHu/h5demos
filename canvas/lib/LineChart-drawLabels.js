@@ -24,6 +24,7 @@ LineChart.fn.drawLabels = function(){
             , opt.paddingBottom
         )
         .clip()
+        .globalAlpha(opt.labelOpacity)
         .font(opt.labelFont)
         .textAlign(opt.labelTextAlign)
         .textBaseline(opt.labelTextBaseline)

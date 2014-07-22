@@ -97,9 +97,10 @@ $.extend(fn, {
 
             // labels
             , labelFont: 'normal normal 28px Serif' 
+            , labelOpacity: 0.4 
             , labelTextAlign: 'center' 
             , labelTextBaseline: 'top'
-            , labelFillStyle: '#e0e0e0'
+            , labelFillStyle: '#fffff'
             , labelPaddingTop: 8 
 
             // current value

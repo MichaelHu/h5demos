@@ -23,6 +23,7 @@ LineChart.fn.drawLastValue = function(){
     x = X[i];
     y = Y[i];
 
+    // default on top of intersect
     offset = offsetY - valueHeight;
     arrowOffset = offset + valueHeight;
     arrowTopOffset = offset + valueHeight + 7;
@@ -48,6 +49,7 @@ LineChart.fn.drawLastValue = function(){
         .textAlign(opt.lastValueTextAlign)
         .textBaseline(baseLine)
         .fillStyle(opt.lastValueBackgroundColor)
+        .strokeStyle(opt.lastValueBackgroundColor)
         ;
 
     textWidth = canvas.getTextWidth(value);
