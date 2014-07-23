@@ -98,6 +98,7 @@ $.extend(fn, {
             // labels
             , labelFont: 'normal normal 28px Serif' 
             , labelOpacity: 0.4 
+            , labelLastLableOpacity: 1
             , labelTextAlign: 'center' 
             , labelTextBaseline: 'top'
             , labelFillStyle: '#fffff'

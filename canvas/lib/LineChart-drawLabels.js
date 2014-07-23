@@ -32,13 +32,24 @@ LineChart.fn.drawLabels = function(){
         ;
 
     for(var i=0, x=opt.drawArea.x + opt.paddingLeft + opt._offsetX; 
-        i<labels.length; i++, x+=labelStep){
+        i<labels.length-1; i++, x+=labelStep){
             if(opt.noDrawHiddenArea
                 && ( x < 0 && x + labelStep < 0
                     || x > opt.canvasWidth && x - opt.canvasWidth > labelStep ) ){
                 continue;
             }
             canvas.fillText(labels[i], x, y + opt.labelPaddingTop);
+    }
+
+    if(opt.noDrawHiddenArea
+        && ( x < 0 && x + labelStep < 0
+            || x > opt.canvasWidth && x - opt.canvasWidth > labelStep ) ){
+        // nop
+    }
+    else{
+        canvas
+            .globalAlpha(opt.labelLastLabelOpacity)
+            .fillText(labels[i], x, y + opt.labelPaddingTop);
     }
 
     canvas
