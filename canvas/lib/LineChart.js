@@ -30,6 +30,7 @@ $.extend(fn, {
             , enableCurrentValue: true
             , enableLastValue: true
             , enableFPS: true
+            , enableShowTail: false
 
             // drag
             , enableDrag: true
@@ -139,13 +140,6 @@ $.extend(fn, {
 
         $.extend(opt, options);
 
-        // make sure intersect is visible
-        opt._offsetX = opt.initOffsetX;
-
-        opt._currentPoint = 0;
-        opt._currentPointThreshold = parseInt( opt.step / 2 );
-
-
         // check error
         if(!opt.data
             || !opt.data.length ){
@@ -169,6 +163,20 @@ $.extend(fn, {
             , w: opt.canvasWidth - opt.marginLeft - opt.marginRight
             , h: opt.canvasHeight - opt.marginTop - opt.marginBottom
         };
+
+        if(opt.enableShowTail){
+            opt._offsetX = opt.drawArea.w - opt.step * opt.data.length;
+            opt._currentPoint 
+                = 1 + Math.abs( parseInt( ( opt._offsetX - opt.initOffsetX) / opt.step ) );
+        }
+        else{
+            // make sure intersect is visible
+            opt._offsetX = opt.initOffsetX;
+            opt._currentPoint = 0;
+        }
+
+        opt._currentPointThreshold = parseInt( opt.step / 2 );
+
 
         // data range
         opt.range = get_data_range(opt.data);
