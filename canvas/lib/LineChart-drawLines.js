@@ -3,7 +3,9 @@ LineChart.fn.drawLines = function(){
         opt = me.opt,
         canvas = opt.canvas,
         X = opt.X,
-        Y = opt.Y;
+        Y = opt.Y,
+        // trend: 'dec', 'inc'
+        T = opt.T = [];
 
     if(!opt.enableLines){
         return this;
@@ -41,6 +43,7 @@ LineChart.fn.drawLines = function(){
             {x: X[i-1], y: Y[i-1]}
             , {x: X[i], y: Y[i]}
         );
+        T[i-1] = ( Y[i] - Y[i-1] >=0 ? 'dec' : 'inc' ); 
 
         intersects = get_intersect_between_line_and_circle(line, fromCircle); 
 
@@ -62,6 +65,7 @@ LineChart.fn.drawLines = function(){
             ;
 
     }
+    T[i-1] = 'inc';
 
     canvas.restore();
 

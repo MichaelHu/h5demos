@@ -14,7 +14,8 @@ LineChart.fn.drawLastValue = function(){
         arrowOffset,
         arrowTopOffset,
         value = parseInt(opt.data[i]),
-        textWidth;
+        textWidth,
+        w;
     
     if(!opt.enableLastValue){
         return me;
@@ -53,13 +54,17 @@ LineChart.fn.drawLastValue = function(){
         ;
 
     textWidth = canvas.getTextWidth(value);
+    w = textWidth + opt.lastValuePaddingHorizontal * 2;
+    if(w < opt.lastValueMinWidth){
+        w = opt.lastValueMinWidth;
+    }
 
     canvas
         .beginPath()
         .rect(
-            x - textWidth / 2 - opt.lastValuePaddingHorizontal  
+            x - w / 2
             , y + offset 
-            , textWidth + opt.lastValuePaddingHorizontal * 2 
+            , w 
             , valueHeight 
         )
         .fill()

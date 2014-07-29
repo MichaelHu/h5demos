@@ -4,8 +4,10 @@ LineChart.fn.drawCurrentValue = function(){
         canvas = opt.canvas,
         X = opt.X,
         Y = opt.Y,
+        T = opt.T,
         x,
         y,
+        trend,
         i = opt._currentPoint,
         baseLine = 'bottom',
         offsetY = opt.currentValueOffsetY;
@@ -18,11 +20,22 @@ LineChart.fn.drawCurrentValue = function(){
     x = X[i];
     // x = opt.drawArea.x + opt.paddingLeft + 60;
     y = Y[i];
+    if(T){
+        trend = T[i]; 
+    }
 
-    if(y - opt.drawArea.y - opt.paddingTop < opt.currentValueThreshold){
-        baseLine = 'top';
-        offsetY *= -1;
-    } 
+    if(opt.enableTrendDetect){
+        if('inc' == trend){
+            baseLine = 'top';
+            offsetY *= -1;
+        }
+    }
+    else{
+        if(y - opt.drawArea.y - opt.paddingTop < opt.currentValueThreshold){
+            baseLine = 'top';
+            offsetY *= -1;
+        } 
+    }
 
     canvas
         .save()

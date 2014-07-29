@@ -31,6 +31,7 @@ $.extend(fn, {
             , enableLastValue: true
             , enableFPS: true
             , enableShowTail: false
+            , enableTrendDetect: false
 
             // drag
             , enableDrag: true
@@ -122,6 +123,7 @@ $.extend(fn, {
             , lastValuePaddingHorizontal: 6  
             , lastValuePaddingVertical: 6  
             , lastValueHeight: 40
+            , lastValueMinWidth : 60 
 
             , data: []
             , labels: []
@@ -164,8 +166,9 @@ $.extend(fn, {
             , h: opt.canvasHeight - opt.marginTop - opt.marginBottom
         };
 
-        if(opt.enableShowTail){
-            opt._offsetX = opt.drawArea.w - opt.step * opt.data.length;
+        if(opt.enableShowTail && opt.data.length > 1){
+            opt._offsetX = opt.drawArea.w - opt.paddingLeft
+                - opt.paddingRight - opt.step * ( opt.data.length - 1 ) - opt.step / 2;
             opt._currentPoint 
                 = 1 + Math.abs( parseInt( ( opt._offsetX - opt.initOffsetX) / opt.step ) );
         }

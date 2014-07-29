@@ -417,6 +417,9 @@ function drawLine3(){
             , enableAxis: true
 
             , enableTouchTrace: true
+            , enableShowTail: true
+
+            , enableTrendDetect: true
 
             , currentValueOffsetY: -20
 
@@ -424,6 +427,8 @@ function drawLine3(){
             , marginRight: 0
                 
             , paddingRight: 40 
+
+            , rangeExpand: 0.6
 
             , intersectLineWidth: 5
             , intersectRadius: 6
@@ -435,6 +440,8 @@ function drawLine3(){
             , paddingTop: 60
             , paddingLeft: 40
             , paddingBottom: 40
+
+            , lastValueMinWidth: 40
 
             , step: 100
         });
