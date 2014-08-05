@@ -444,6 +444,10 @@ function drawLine3(){
             , lastValueMinWidth: 40
 
             , step: 100
+
+            , onafterdrag: function(){
+                console.log('afterdrag');
+            }
         });
 
     // lineChart.opt.canvas.css('background-color', 'rgba(100, 100, 100, 0.5)');

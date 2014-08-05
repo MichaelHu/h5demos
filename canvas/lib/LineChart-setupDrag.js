@@ -4,6 +4,7 @@ LineChart.fn.setupDrag = function(){
         opt = me.opt,
         lastTouchX,
         _lastOffsetX,
+        _isDraged,
         canvas = opt.canvas;
 
     if(!opt.enableDrag || me.isRedraw || opt.data.length <= 1){
@@ -14,6 +15,7 @@ LineChart.fn.setupDrag = function(){
     canvas.on('touchstart', function(e){
             lastTouchX 
                 = e.targetTouches[0].clientX;
+            _isDraged = false;
         })
         .on('touchmove', function(e){
             var t = e.targetTouches[0],
@@ -78,11 +80,18 @@ LineChart.fn.setupDrag = function(){
             // ignore no-need redraw
             if(_lastOffsetX != opt._offsetX){
                 me.draw();
+                _isDraged = true;
             }
         })
         .on('touchend', function(e){
             var t = e.changedTouches[0],
                 offsetX;
+
+            if('function' == typeof opt.onafterdrag){
+                setTimeout(function(){
+                    opt.onafterdrag();
+                }, 0);
+            }
 
             if(opt.enableTouchTrace){
                 return;
