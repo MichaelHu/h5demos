@@ -2,6 +2,10 @@
 	text-align: left;
 }
 
+.reveal li pre {
+    width: auto;
+}
+
 .no-transforms .reveal .slides {
 	text-align: left;
 }
