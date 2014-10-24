@@ -554,6 +554,72 @@ function drawLine3(){
 
 
 
+function drawTest(){
+
+    var canvas = new Canvas($('<canvas id="c_test"></canvas>').appendTo('body'));
+
+    canvas
+        .width(640)
+        .height(400);
+
+    var base = {x: 40, y: 40};
+    var startPoint = {
+            x: 100 + base.x
+            , y: 100 + base.y
+        };
+    var endPoint = {
+            x: 200 + base.x
+            , y: 200 + base.y
+        };
+    var controlPoint = {
+            x: 200 + base.x
+            , y: 100 + base.y
+        };
+    var radius = 150;
+
+    for(var i=0; i<=3; i++){
+        canvas.save()
+            .beginPath()
+            .moveTo(i*100 + base.x, base.y)
+            .lineTo(i*100 + base.x, 300 + base.y)
+            .strokeStyle('#fff')
+            .stroke()
+            .restore();
+
+        canvas.save()
+            .beginPath()
+            .moveTo(base.x, i*100 + base.y)
+            .lineTo(300 + base.x, i*100 + base.y)
+            .strokeStyle('#fff')
+            .stroke()
+            .restore();
+    };
+
+
+    canvas
+        .save()
+        .beginPath()
+        .moveTo(startPoint.x, startPoint.y)
+        .arcTo(controlPoint.x, controlPoint.y, endPoint.x, endPoint.y, radius)
+        .strokeStyle('#f00')
+        .stroke()
+        .restore()
+        ;
+
+
+    canvas.save()
+        .fillStyle('#0f0')
+        .fillRect(startPoint.x - 5, startPoint.y - 5, 10, 10) 
+        .fillRect(endPoint.x - 5, endPoint.y - 5, 10, 10) 
+        .fillStyle('#ff0')
+        .fillRect(controlPoint.x - 5, controlPoint.y - 5, 10, 10) 
+        .restore()
+        ;
+
+}
+
+
+
 setTimeout(function(){
     /*
     drawText();
@@ -561,6 +627,7 @@ setTimeout(function(){
     drawLine2();
     */
     
+    drawTest();
     drawLine3();
 }, 300);
 
