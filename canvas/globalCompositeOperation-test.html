@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=320.1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/> 
+        <title>CANVAS</title>
+        <link rel="stylesheet" href="../lib/css/reset.css?__inline"/>
+    </head>
+    <body>
+        <canvas id="canvas" style="margin-top: 50px; margin-left: 50px; background-color:#bbb"></canvas>
+    </body>
+    <script src="../lib/zepto.js?__inline"></script>
+    <script src="./lib/Canvas.js?__inline"></script>
+    <script>
+        var canvas = new Canvas('#canvas')
+                        .width(400)
+                        .height(300);
+
+        var gcos = [
+                'source-over'
+                , 'source-atop'
+                , 'source-in'
+                , 'source-out'
+                , 'destination-over'
+                , 'destination-atop'
+                , 'destination-in'
+                , 'destination-out'
+                , 'lighter'
+                , 'darker'
+                , 'copy'
+                , 'xor'
+            ];
+
+        canvas
+            .font('12px Arial')
+            .textAlign('center')
+            .textBaseline('top')
+            ;
+
+        for(var i=0, len=gcos.length; i<len; i++){
+
+            var row = Math.floor(i / 4),
+                col = i % 4;
+
+            canvas
+                .save()
+
+                .fillStyle('#000')
+                .fillText(gcos[i], col * 100 + 50, row * 100 + 0)
+
+                .fillStyle('#f00')
+                .fillRect(col * 100 + 20, row * 100 + 20, 50, 50)
+
+                .beginPath()
+                .rect(col * 100 + 0, row * 100 + 19, 100, 81)
+                .clip()
+                .globalCompositeOperation(gcos[i])
+                .fillStyle('#0f0')
+                .beginPath()
+                .arc(col * 100 + 70, row * 100 + 70, 20, 0, 2 * Math.PI, true)
+                .fill()
+                .restore()
+                ;
+
+        }
+
+    </script>
+</html>
+
+
