@@ -5,7 +5,7 @@ $(function(){
 
 
 window.scrollTo(0, 0);
-setTimeout(fullfill, 1000);
+// setTimeout(fullfill, 1000);
 init();
 // $(window).on('scroll', fullfill);
 
@@ -21,12 +21,26 @@ function init(){
             , $item.attr('class')
         );
 
+        $item.append([
+            '<h3>'
+            , 'lr-anim: ' + $item.data('lr-anim')
+            , '<br>ub-anim: ' + $item.data('ub-anim')
+            , '</h3>'
+        ].join(''));
+
         if(index === 0){
             $item.show();
         }
     });
 
-    $('body').on('swipeUp swipeLeft', function(e){
+    $('body').on('touchmove', function(e){
+        e.preventDefault();
+    });
+
+    $('.slide').on('swipeUp swipeLeft', function(e){
+
+        e.stopPropagation();
+
         var $target = $(e.target),
             $slides = $('.slide'),
             $cur = $target.closest('.slide'),
@@ -39,11 +53,13 @@ function init(){
             animType
             ;
 
+
         if(curPos < total - 1){
             $next = $slides.eq(curPos + 1); 
         }
 
         if($next){
+
 
             curAnimations = {
                 'lr': $cur.data('lr-anim')
@@ -55,9 +71,7 @@ function init(){
                 , 'ub': $next.data('ub-anim')
             };
 
-            console.log(curAnimations);
             animType = ('swipeUp' == type ? 'ub' : 'lr');
-            console.log(animType);
 
             switchPage(
                 $cur
@@ -72,7 +86,9 @@ function init(){
     });
 
 
-    $('body').on('swipeDown swipeRight', function(e){
+    $('.slide').on('swipeDown swipeRight', function(e){
+
+        e.stopPropagation();
 
         var $target = $(e.target),
             $slides = $('.slide'),
@@ -101,8 +117,6 @@ function init(){
                 'lr': $next.data('lr-anim')
                 , 'ub': $next.data('ub-anim')
             };
-
-            console.log(curAnimations);
 
             animType = ('swipeDown' == type ? 'ub' : 'lr');
 
@@ -146,6 +160,131 @@ var animations = {
             , '180': ['pt-page-moveToLeftEasing pt-page-ontop', 'pt-page-moveFromRight']
         }
 
+        , 'scaledown-move-left-right': {
+            '0': ['pt-page-scaleDown', 'pt-page-moveFromLeft pt-page-ontop']
+            , '180': ['pt-page-scaleDown', 'pt-page-moveFromRight pt-page-ontop']
+        }
+
+        , 'move-left-right-scaleup': {
+            '0': ['pt-page-moveToRight pt-page-ontop', 'pt-page-scaleUp']
+            , '180': ['pt-page-moveToLeft pt-page-ontop', 'pt-page-scaleUp']
+        }
+
+        , 'rotate-move-left-right': {
+            '0': ['pt-page-rotateLeftSideFirst', 'pt-page-moveFromLeft pt-page-delay200 pt-page-ontop']
+            , '180': ['pt-page-rotateRightSideFirst', 'pt-page-moveFromRight pt-page-delay200 pt-page-ontop']
+        }
+
+        , 'flip-left-right': {
+            '0': ['pt-page-flipOutRight', 'pt-page-flipInLeft pt-page-delay500']
+            , '180': ['pt-page-flipOutLeft', 'pt-page-flipInRight pt-page-delay500']
+        }
+
+        , 'rotatepush-left-right': {
+            '0': ['pt-page-rotatePushRight', 'pt-page-moveFromLeft']
+            , '180': ['pt-page-rotatePushLeft', 'pt-page-moveFromRight']
+        }
+
+        , 'rotatepush-rotatepull': {
+            '0': ['pt-page-rotatePushRight', 'pt-page-rotatePullLeft pt-page-delay180']
+            , '90': ['pt-page-rotatePushTop', 'pt-page-rotatePullBottom pt-page-delay180']
+            , '180': ['pt-page-rotatePushLeft', 'pt-page-rotatePullRight pt-page-delay180']
+            , '270': ['pt-page-rotatePushBottom', 'pt-page-rotatePullTop pt-page-delay180']
+        }
+
+
+
+
+
+
+
+
+        , 'scaledown-scaleupdown': {
+            '0': ['pt-page-scaleDown', 'pt-page-scaleUpDown pt-page-delay300']
+            , '90': ['pt-page-scaleDown', 'pt-page-scaleUpDown pt-page-delay300']
+            , '180': ['pt-page-scaleDown', 'pt-page-scaleUpDown pt-page-delay300']
+            , '270': ['pt-page-scaleDown', 'pt-page-scaleUpDown pt-page-delay300']
+            , '180': ['pt-page-scaleDownUp', 'pt-page-scaleUp pt-page-delay300']
+        }
+
+        , 'scaledownup-scaleup': {
+            '0': ['pt-page-scaleDownUp', 'pt-page-scaleUp pt-page-delay300']
+            , '90': ['pt-page-scaleDownUp', 'pt-page-scaleUp pt-page-delay300']
+            , '180': ['pt-page-scaleDownUp', 'pt-page-scaleUp pt-page-delay300']
+            , '270': ['pt-page-scaleDownUp', 'pt-page-scaleUp pt-page-delay300']
+        }
+
+        , 'scaledowncenter-scaleupcenter': {
+            '0': ['pt-page-scaleDownCenter', 'pt-page-scaleUpCenter pt-page-delay400']
+            , '90': ['pt-page-scaleDownCenter', 'pt-page-scaleUpCenter pt-page-delay400']
+            , '180': ['pt-page-scaleDownCenter', 'pt-page-scaleUpCenter pt-page-delay400']
+            , '270': ['pt-page-scaleDownCenter', 'pt-page-scaleUpCenter pt-page-delay400']
+        }
+
+        , 'rotatefall-scaleup': {
+            '0': ['pt-page-rotateFall pt-page-ontop', 'pt-page-scaleUp']
+            , '90': ['pt-page-rotateFall pt-page-ontop', 'pt-page-scaleUp']
+            , '180': ['pt-page-rotateFall pt-page-ontop', 'pt-page-scaleUp']
+            , '270': ['pt-page-rotateFall pt-page-ontop', 'pt-page-scaleUp']
+        }
+
+        , 'rotatenewspaper': {
+            '0': ['pt-page-rotateOutNewspaper', 'pt-page-rotateInNewspaper pt-page-delay500']
+            , '90': ['pt-page-rotateOutNewspaper', 'pt-page-rotateInNewspaper pt-page-delay500']
+            , '180': ['pt-page-rotateOutNewspaper', 'pt-page-rotateInNewspaper pt-page-delay500']
+            , '270': ['pt-page-rotateOutNewspaper', 'pt-page-rotateInNewspaper pt-page-delay500']
+        }
+
+        , 'rotatefold-movefade': {
+            '0': ['pt-page-rotateFoldRight', 'pt-page-moveFromLeftFade']
+            , '90': ['pt-page-rotateFoldTop', 'pt-page-moveFromBottomFade']
+            , '180': ['pt-page-rotateFoldLeft', 'pt-page-moveFromRightFade']
+            , '270': ['pt-page-rotateFoldBottom', 'pt-page-moveFromTopFade']
+        }
+
+        , 'movefade-rotateunfold': {
+            '0': ['pt-page-moveToRightFade', 'pt-page-rotateUnfoldLeft']
+            , '90': ['pt-page-moveToTopFade', 'pt-page-rotateUnfoldBottom']
+            , '180': ['pt-page-moveToLeftFade', 'pt-page-rotateUnfoldRight']
+            , '270': ['pt-page-moveToBottomFade', 'pt-page-rotateUnfoldTop']
+        }
+
+        , 'rotateroom': {
+            '0': ['pt-page-rotateRoomRightOut pt-page-ontop', 'pt-page-rotateRoomRightIn']
+            , '90': ['pt-page-rotateRoomTopOut pt-page-ontop', 'pt-page-rotateRoomTopIn']
+            , '180': ['pt-page-rotateRoomLeftOut pt-page-ontop', 'pt-page-rotateRoomLeftIn']
+            , '270': ['pt-page-rotateRoomBottomOut pt-page-ontop', 'pt-page-rotateRoomBottomIn']
+        }
+
+        , 'rotatecube': {
+            '0': ['pt-page-rotateCubeRightOut pt-page-ontop', 'pt-page-rotateCubeRightIn']
+            , '90': ['pt-page-rotateCubeTopOut pt-page-ontop', 'pt-page-rotateCubeTopIn']
+            , '180': ['pt-page-rotateCubeLeftOut pt-page-ontop', 'pt-page-rotateCubeLeftIn']
+            , '270': ['pt-page-rotateCubeBottomOut pt-page-ontop', 'pt-page-rotateCubeBottomIn']
+        }
+
+        , 'rotatecarousel': {
+            '0': ['pt-page-rotateCarouselRightOut pt-page-ontop', 'pt-page-rotateCarouselRightIn']
+            , '90': ['pt-page-rotateCarouselTopOut pt-page-ontop', 'pt-page-rotateCarouselTopIn']
+            , '180': ['pt-page-rotateCarouselLeftOut pt-page-ontop', 'pt-page-rotateCarouselLeftIn']
+            , '270': ['pt-page-rotateCarouselBottomOut pt-page-ontop', 'pt-page-rotateCarouselBottomIn']
+        }
+
+        , 'rotateslide': {
+            '0': ['pt-page-rotateSlideOut', 'pt-page-rotateSlideIn']
+            , '90': ['pt-page-rotateSlideOut', 'pt-page-rotateSlideIn']
+            , '180': ['pt-page-rotateSlideOut', 'pt-page-rotateSlideIn']
+            , '270': ['pt-page-rotateSlideOut', 'pt-page-rotateSlideIn']
+        }
+
+        , 'rotateslide-delay': {
+            '0': ['pt-page-rotateSlideOut', 'pt-page-rotateSlideIn pt-page-delay200']
+            , '90': ['pt-page-rotateSlideOut', 'pt-page-rotateSlideIn pt-page-delay200']
+            , '180': ['pt-page-rotateSlideOut', 'pt-page-rotateSlideIn pt-page-delay200']
+            , '270': ['pt-page-rotateSlideOut', 'pt-page-rotateSlideIn pt-page-delay200']
+        }
+
+
 
 
 
@@ -174,6 +313,34 @@ var animations = {
             , '270': ['pt-page-moveToBottomEasing pt-page-ontop', 'pt-page-moveFromTop']
         }
 
+        , 'scaledown-move-top-bottom': {
+            '90': ['pt-page-scaleDown', 'pt-page-moveFromBottom pt-page-ontop']
+            , '270': ['pt-page-scaleDown', 'pt-page-moveFromTop pt-page-ontop']
+        }
+
+        , 'move-top-bottom-scaleup': {
+            '90': ['pt-page-moveToTop pt-page-ontop', 'pt-page-scaleUp']
+            , '270': ['pt-page-moveToBottom pt-page-ontop', 'pt-page-scaleUp']
+        }
+
+        , 'rotate-move-top-bottom': {
+            '90': ['pt-page-rotateBottomSideFirst', 'pt-page-moveFromBottom pt-page-delay200 pt-page-ontop']
+            , '270': ['pt-page-rotateTopSideFirst', 'pt-page-moveFromTop pt-page-delay200 pt-page-ontop']
+        }
+
+        , 'flip-top-bottom': {
+            '90': ['pt-page-flipOutTop', 'pt-page-flipInBottom pt-page-delay500']
+            , '270': ['pt-page-flipOutBottom', 'pt-page-flipInTop pt-page-delay500']
+        }
+
+        , 'rotatepush-top-bottom': {
+            '90': ['pt-page-rotatePushTop', 'pt-page-moveFromBottom']
+            , '270': ['pt-page-rotatePushBottom', 'pt-page-moveFromTop']
+        }
+
+
+
+
     },
     isAnimating = false;
 
@@ -183,18 +350,21 @@ var animations = {
 
 function switchPage($outPage, $inPage, animation, direction){
 
-    console.log(animation);
-    console.log(direction);
-
     var outClass = animations[animation][direction + ''][0],
         inClass = animations[animation][direction + ''][1],
-        outPageEnd, inPageEnd;
+        outPageEnd, inPageEnd,
+        animationComplete;
 
-    if(isAnimating){
+    if(isAnimating ){
+        return;
+    }
+
+    if(!$outPage.length || !$inPage.length){
         return;
     }
     
     isAnimating = true;
+    animationComplete = false;
     outPageEnd = inPageEnd = false;
 
     $outPage.addClass(outClass)
@@ -214,10 +384,23 @@ function switchPage($outPage, $inPage, animation, direction){
             } 
         });
 
+
+    // afterAnimation may not be called in case of fast swipe
+    setTimeout(function(){
+        if(!animationComplete){
+            afterAnimation(1);
+        }
+    }, 2000);
+
+
     function beforeAnimation(){
     }
 
-    function afterAnimation(){
+
+    function afterAnimation(isShowInfo){
+        isAnimating = false;
+        animationComplete = true;
+
         $outPage.hide()
             .attr('class', $outPage.data('original-classes'))
             .off('webkitAnimationEnd');
@@ -226,7 +409,10 @@ function switchPage($outPage, $inPage, animation, direction){
             .attr('class', $inPage.data('original-classes'))
             .off('webkitAnimationEnd');
 
-        isAnimating = false;
+        if(isShowInfo){
+            // alert($outPage.index() + ', ' + $inPage.index());
+        }
+
     }
 
 }
