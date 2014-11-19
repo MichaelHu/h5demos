@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=320.1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/> 
+        <title>Arc Test</title>
+        <link rel="stylesheet" href="../lib/css/reset.css?__inline"/>
+    </head>
+    <body>
+        <canvas id="canvas" style="width:320px; height:150px; margin-top: 50px; background-color:#ffc;"></canvas>
+    </body>
+    <script src="../lib/zepto.js?__inline"></script>
+    <script src="./lib/Canvas.js?__inline"></script>
+    <script>
+        var width = 640;
+        var canvas = new Canvas('#canvas')
+                        .width(width)
+                        .height(300);
+
+
+        canvas
+            .font('12px Arial')
+            .textAlign('center')
+            .textBaseline('top')
+            ;
+
+        var PI = Math.PI;
+
+        var freq = 50;
+
+
+
+
+        function impulse(percent, duration, render, callback){
+
+            var steps = duration / 1000 * freq;
+
+            if(percent < 1){
+                if(1 - percent <= 1 / steps){
+                    render(1);
+                    callback && callback();
+                    return;
+                }
+
+                render(percent); 
+                setTimeout(function(){
+                    impulse(percent + 1 / steps, duration, render, callback)
+                }, 1000 / freq);
+            } 
+        }
+
+
+renderCircleStat({
+    x: width / 3 - width / 6
+    , y: 200
+    , radius: 60
+    , color: '#e02f2f'
+    , sAngle: 1.5 * PI
+    , eAngle: 0.25 * PI
+    , text1: '62'
+    , text2: '%'
+    , text3: '好评'
+    , duration: 500
+});
+
+renderCircleStat({
+    x: 2 * width / 3 - width / 6
+    , y: 200
+    , radius: 60
+    , color: '#ea9318'
+    , sAngle: 1.5 * PI
+    , eAngle: PI
+    , text1: '25'
+    , text2: '%'
+    , text3: '中评'
+    , duration: 500
+});
+
+renderCircleStat({
+    x: width - width / 6
+    , y: 200
+    , radius: 60
+    , color: '#1a8afd'
+    , sAngle: 1.5 * PI
+    , eAngle: 1.25 * PI
+    , text1: '13'
+    , text2: '%'
+    , text3: '差评'
+    , duration: 500
+});
+
+
+function renderCircleStat(options){
+
+        var opt = options;
+
+        var opt1 = {
+                x: opt.x
+                , y: opt.y
+                , radius: opt.radius
+                , color: opt.color 
+                , sAngle: opt.sAngle 
+                , eAngle: opt.eAngle 
+                , lineWidth: 12
+                , duration: opt.duration || 500
+            };
+
+        var opt2 = {
+                x: opt.x
+                , y: opt.y
+                , radius: opt.radius
+                , color: opt.color 
+                , sAngle: 1.5 * PI 
+                , eAngle: - 0.5 * PI
+                , lineWidth: 2
+                , duration: opt.duration || 500
+            };
+
+
+        function _renderArc(options, percent){
+            canvas
+                .save()
+                .beginPath()
+                .arc(options.x, options.y, options.radius, options.sAngle
+                    , options.sAngle + ( options.eAngle - options.sAngle ) * percent,
+                    true )
+                .strokeStyle(options.color)
+                .lineWidth(options.lineWidth)
+                .stroke()
+                .restore()
+                ;
+        }
+
+
+        function _renderText(_options, percent){
+            var width1, width2, total, text1;
+
+            total = _options.text1 - 0;
+            text1 = Math.ceil( 0 + total * percent );
+
+            width1 = canvas
+                .save()
+                .font('normal normal normal 44px/44px Arial')
+                .getTextWidth(text1);
+
+            width2 = canvas
+                .save()
+                .font('normal normal normal 18px/44px Arial')
+                .getTextWidth(_options.text2);
+
+            canvas
+                .save()
+                .clearRect(_options.x - 38, _options.y - 38, 76, 76)
+                .textAlign('start')
+                .font('normal normal normal 44px/44px Arial')
+                .fillStyle(opt.color)
+                .fillText(text1, _options.x - (width1 + width2) / 2, _options.y - 40)
+                .textAlign('end')
+                .font('normal normal normal 18px/44px Arial')
+                .fillStyle(opt.color)
+                .fillText(_options.text2, _options.x + (width1 + width2) / 2, _options.y - 25)
+                .textAlign('center')
+                .fillText(_options.text3, _options.x, _options.y + 9)
+                .restore()
+                ;
+        }
+
+
+        function render1(percent){
+            _renderArc(opt1, percent); 
+            _renderText({
+                text1: opt.text1
+                , text2: opt.text2
+                , text3: opt.text3
+                , x: opt.x
+                , y: opt.y
+            }, percent);
+        }
+
+        function render2(percent){
+            _renderArc(opt2, percent); 
+        }
+
+
+
+
+        impulse(0, opt2.duration, render2, function(){
+            impulse(0, opt1.duration, render1, function(){
+            });
+        });
+
+
+
+}
+
+    </script>
+</html>
+
+
