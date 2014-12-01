@@ -1,0 +1,16 @@
+h3{
+    font-family: monospace;
+}
+
+.pass{
+    background-color: #9c6;
+}
+
+.fail{
+    background-color: #f66;
+}
+
+code{
+    color: #ff6;
+    margin-left: 20px;
+}
