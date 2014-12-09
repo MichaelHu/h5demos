@@ -2,32 +2,32 @@ var toString = Object.prototype.toString;
 var _ = {
 
     isFunction: function(obj){
-        return toString.call(obj) === '[object Function]'; 
+        return toString.call(obj) === '[object Function]';
     }
 
-    , isObject: function(obj){                                                                                       
-        var type = typeof obj;                                                                                    
-        return type === 'function'                                                                                
-            || type === 'object'                                                                                  
-                // typeof null == 'object'                                                                        
-                && !!obj;                                                                                         
+    , isObject: function(obj){
+        var type = typeof obj;
+        return type === 'function'
+            || type === 'object'
+                // typeof null == 'object'
+                && !!obj;
     }
 
-    , has: function(obj, key){                                                                                       
-        return obj != null && Object.prototype.hasOwnProperty.call(obj, key);                                     
-    }                                                                                                             
-                                                                                                                  
-    , keys: function(obj){                                                                                          
-        if(!_.isObject(obj)) return [];                                                                             
-        if(Object.keys) return Object.keys(obj);                                                                  
-        var keys = [];                                                                                            
-        for(var key in obj) {                                                                                     
-            if(_.has(obj, key)){                                                                                    
-                keys.push(key);                                                                                   
-            }                                                                                                     
-        }                                                                                                         
-        return keys;                                                                                              
-    } 
+    , has: function(obj, key){
+        return obj != null && Object.prototype.hasOwnProperty.call(obj, key);
+    }
+
+    , keys: function(obj){
+        if(!_.isObject(obj)) return [];
+        if(Object.keys) return Object.keys(obj);
+        var keys = [];
+        for(var key in obj) {
+            if(_.has(obj, key)){
+                keys.push(key);
+            }
+        }
+        return keys;
+    }
 };
 
 
