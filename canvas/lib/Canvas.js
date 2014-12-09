@@ -255,6 +255,17 @@ fn.prototype = {
         return this;
     }
 
+    /**
+     * image
+     * params: img, x, y
+     *         img, x, y, width, height
+     *         img, sx, sy, swidth, sheight, x, y, width, height
+     */
+    ,drawImage: function(){
+        this.ctx.drawImage.apply(this.ctx, arguments);
+        return this;
+    }
+
 
 
 

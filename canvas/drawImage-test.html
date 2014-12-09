@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=320.1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/> 
+        <title>Anti image burr</title>
+        <link rel="stylesheet" href="../lib/css/reset.css?__inline"/>
+    </head>
+    <body>
+        <canvas id="canvas" style="width:500px; height:500px; margin-left: 20px; margin-top: 20px; background-color:#ffc;"></canvas>
+    </body>
+    <script src="../lib/zepto.js?__inline"></script>
+    <script src="./lib/Canvas.js?__inline"></script>
+    <script>
+        var canvasWidth = 1000;
+            canvasHeight = 1000;
+        var canvas = new Canvas('#canvas')
+                        .width(canvasWidth)
+                        .height(canvasHeight);
+
+
+        canvas
+            .font('12px Arial')
+            .textAlign('center')
+            .textBaseline('top')
+            ;
+
+        var PI = Math.PI;
+
+        var freq = 50;
+
+
+
+
+        function impulse(percent, duration, render, callback){
+
+            var steps = duration / 1000 * freq;
+
+            if(percent < 1){
+                if(1 - percent <= 1 / steps){
+                    render(1);
+                    callback && callback();
+                    return;
+                }
+
+                render(percent); 
+                setTimeout(function(){
+                    impulse(percent + 1 / steps, duration, render, callback)
+                }, 1000 / freq);
+            } 
+        }
+
+
+renderImage();
+
+function renderImage(){
+
+    var img = new Image();
+
+    img.onload = function(){
+        var natureWidth = img.width,
+            natureHeight = img.height;
+
+        canvas
+            .save()
+            .drawImage(img, 50, 50)
+            .restore()
+            ;
+
+        function render(percent){
+            var rand = Math.random();
+            var zoomin = rand >= 0.5; 
+            var rand1 = Math.random();
+            var rand2 = Math.random();
+
+            var opt = {
+                x: ( canvasWidth - natureWidth ) * rand1 
+                , y: ( canvasHeight - natureHeight ) * rand2 
+                , width: zoomin ? natureWidth * ( 1 + rand ) : natureWidth * ( 1 - rand ) 
+                , height: zoomin ? natureHeight * ( 1 + rand ) : natureHeight * ( 1 - rand ) 
+            };
+            canvas
+                .save()
+                .rotate((zoomin ? 1 : -1 ) * rand * 90 * PI / 180)
+                .drawImage(img, opt.x, opt.y, opt.width, opt.height)
+                .restore();
+        }
+
+        impulse(0, 1000, render, function(){
+            console.log('render complete');
+        });
+
+    };
+
+    img.src = './6.png';
+
+}
+
+    </script>
+</html>
+
+
+
