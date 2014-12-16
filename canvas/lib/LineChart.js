@@ -15,7 +15,8 @@ $.extend(fn, {
 
     init: function(options){
 
-        var me = this, opt;
+        var me = this, opt,
+            scale = window.devicePixelRatio || 1;
 
         me.opt = {
 
@@ -39,22 +40,23 @@ $.extend(fn, {
             , dragAccelerate: 3
             
             // cavas size
-            , canvasWidth: 640
-            , canvasHeight: 480
+            , scale: scale
+            , canvasWidth: 320 * scale
+            , canvasHeight: 240 * scale
 
-            , step: 100
+            , step: 50 * scale
 
             // draw area margin
-            , marginTop: 20 
-            , marginRight: 20
-            , marginBottom: 20 
-            , marginLeft: 20
+            , marginTop: 10 * scale 
+            , marginRight: 10 * scale
+            , marginBottom: 10 * scale
+            , marginLeft: 10 * scale
 
             // draw area padding
-            , paddingTop: 20
-            , paddingRight: 20
-            , paddingBottom: 20 
-            , paddingLeft: 20
+            , paddingTop: 10 * scale
+            , paddingRight: 10 * scale
+            , paddingBottom: 10 * scale 
+            , paddingLeft: 10 * scale
 
             // range
             , rangeExpand: 0.2
@@ -65,65 +67,65 @@ $.extend(fn, {
 
             // axis
             , axisOpacity: 1
-            , axisLineWidth: 2 // no less than 2, hide while redraw otherwise
+            , axisLineWidth: 1 * scale // no less than 2, hide while redraw otherwise
             , axisStrokeStyle: '#7591ac'
 
             // grid
             , gridOpacity: 0.4
-            , gridLineWidth: 2
+            , gridLineWidth: 1 * scale
             , gridStrokeStyle: '#f8f8f8'
 
             // last-grid
             , lastGridOpacity: 1 
-            , lastGridLineWidth: 2 
+            , lastGridLineWidth: 1 * scale 
             , lastGridStrokeStyle: '#b2c4d5'
-            , lastGridFootSize: 10
+            , lastGridFootSize: 5 * scale
 
             // intersect
-            , intersectRadius: 8
+            , intersectRadius: 4 * scale
             , intersectOpacity: 1
-            , intersectLineWidth: 2
+            , intersectLineWidth: 1 * scale
             , intersectStrokeStyle: '#ffffff'
 
             // current point
             , currentPointOpacity: 0.5 
-            , currentPointtLineWidth: 6 
+            , currentPointtLineWidth: 3 * scale 
             , currentPointStrokeStyle: '#ffffff' 
-            , currentPointRadius: 10 
-            , currentLabelOffsetY: -10
+            , currentPointRadius: 5 * scale 
+            , currentLabelOffsetY: -5 * scale
 
             // lines
             , linesOpacity: 1
-            , linesLineWidth: 2
+            , linesLineWidth: 1 * scale
             , linesStrokeStyle: '#ffffff'
 
             // labels
-            , labelFont: 'normal normal 28px Serif' 
+            , labelFont: 'normal normal ' + ( 14 * scale ) + 'px Serif' 
             , labelOpacity: 0.4 
             , labelLastLableOpacity: 1
             , labelTextAlign: 'center' 
             , labelTextBaseline: 'top'
             , labelFillStyle: '#fffff'
-            , labelPaddingTop: 8 
+            , labelPaddingTop: 4 * scale 
 
             // current value
-            , currentValueFont: 'normal normal 28px Arial'
+            , currentValueFont: 'normal normal ' + ( 14 * scale ) + 'px Arial'
             , currentValueTextAlign: 'center'
             , currentValueFillStyle: '#ffffff'
-            , currentValueOffsetY: -20 
-            , currentValueThreshold: 28 + 20
+            , currentValueOffsetY: -10 * scale 
+            , currentValueThreshold: ( 14 + 10 ) * scale
 
             // last value
-            , lastValueFont: 'normal normal 28px Arial'
+            , lastValueFont: 'normal normal ' + ( 14 * scale ) + 'px Arial'
             , lastValueTextAlign: 'center'
             , lastValueBackgroundColor: '#ffffff'
             , lastValueFillStyle: 'rgba(0,0,0,0.4)'
-            , lastValueOffsetY: -30 
-            , lastValueThreshold: 28 + 30
-            , lastValuePaddingHorizontal: 6  
-            , lastValuePaddingVertical: 6  
-            , lastValueHeight: 40
-            , lastValueMinWidth : 60 
+            , lastValueOffsetY: -15 * scale 
+            , lastValueThreshold: ( 14 + 15 ) * scale
+            , lastValuePaddingHorizontal: 3 * scale 
+            , lastValuePaddingVertical: 3 * scale 
+            , lastValueHeight: 20 * scale
+            , lastValueMinWidth : 30 * scale
 
             , data: []
             , labels: []

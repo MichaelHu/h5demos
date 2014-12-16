@@ -27,12 +27,12 @@ LineChart.fn.drawLastValue = function(){
     // default on top of intersect
     offset = offsetY - valueHeight;
     arrowOffset = offset + valueHeight;
-    arrowTopOffset = offset + valueHeight + 7;
+    arrowTopOffset = offset + valueHeight + 3.5 * opt.scale;
 
     if(y - opt.drawArea.y - opt.paddingTop < opt.lastValueThreshold){
         offset = -offsetY;
         arrowOffset = offset; 
-        arrowTopOffset = offset - 7; 
+        arrowTopOffset = offset - 3.5 * opt.scale; 
     } 
 
     canvas

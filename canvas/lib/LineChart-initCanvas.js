@@ -5,8 +5,8 @@ LineChart.fn.initCanvas = function(){
         .width(opt.canvasWidth)
         .height(opt.canvasHeight)
         .css({
-            width: opt.canvasWidth / 2 + 'px'
-            , height: opt.canvasHeight / 2 + 'px' 
+            width: opt.canvasWidth / opt.scale + 'px'
+            , height: opt.canvasHeight / opt.scale + 'px' 
         })
         ;
 };

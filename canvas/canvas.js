@@ -398,6 +398,7 @@ function drawLine2(){
 
 
 function drawLine3(){
+    var scale = window.devicePixelRatio || 1;
     var lineChart = new LineChart({
             data: randomData(3, 9000, 31) 
             , labels: [
@@ -407,8 +408,8 @@ function drawLine3(){
             ]
 
             , canvas: new Canvas($('<canvas/>').appendTo('#chart_cont'))
-            , canvasWidth: 640
-            , canvasHeight: 400
+            , canvasWidth: 320 * scale 
+            , canvasHeight: 200 * scale
 
             , enableGrids: true
             , enableLines: true
@@ -421,29 +422,29 @@ function drawLine3(){
 
             , enableTrendDetect: true
 
-            , currentValueOffsetY: -20
+            , currentValueOffsetY: -10 * scale
 
             , marginLeft: 0
             , marginRight: 0
                 
-            , paddingRight: 40 
+            , paddingRight: 20 * scale 
 
             , rangeExpand: 0.6
 
-            , intersectLineWidth: 5
-            , intersectRadius: 6
+            , intersectLineWidth: 2.5 * scale
+            , intersectRadius: 3 * scale
 
-            , initOffsetX: 6 + 5 + 44
+            , initOffsetX: ( 3 + 2.5 + 22 ) * scale
 
-            , linesLineWidth: 4
+            , linesLineWidth: 2 * scale
 
-            , paddingTop: 60
-            , paddingLeft: 40
-            , paddingBottom: 40
+            , paddingTop: 30 * scale
+            , paddingLeft: 20 * scale
+            , paddingBottom: 20 * scale
 
-            , lastValueMinWidth: 40
+            , lastValueMinWidth: 20 * scale
 
-            , step: 100
+            , step: 50 * scale
 
             , onafterdrag: function(){
                 console.log('afterdrag');
@@ -466,8 +467,8 @@ function drawLine3(){
             ]
 
             , canvas: new Canvas($('<canvas/>').appendTo('#chart_cont'))
-            , canvasWidth: 640
-            , canvasHeight: 400
+            , canvasWidth: 320 * scale
+            , canvasHeight: 200 * scale
 
             , enableGrids: true
             , enableLines: true
@@ -478,25 +479,25 @@ function drawLine3(){
             , enableTouchTrace: true
             , enableFPS: false
 
-            , currentValueOffsetY: -20
+            , currentValueOffsetY: -10 * scale
 
             , marginLeft: 0
             , marginRight: 0
                 
-            , paddingRight: 40 
+            , paddingRight: 20 * scale 
 
-            , intersectLineWidth: 5
-            , intersectRadius: 6
+            , intersectLineWidth: 2.5 * scale
+            , intersectRadius: 3 * scale
 
-            , initOffsetX: 6 + 5 + 44
+            , initOffsetX: ( 3 + 2.5 + 22 ) * scale
 
-            , linesLineWidth: 4
+            , linesLineWidth: 2 * scale
 
-            , paddingTop: 60
-            , paddingLeft: 40
-            , paddingBottom: 40
+            , paddingTop: 30 * scale
+            , paddingLeft: 20 * scale
+            , paddingBottom: 20 * scale
 
-            , step: 100
+            , step: 50 * scale
         });
 
     // lineChart.opt.canvas.css('background-color', 'rgba(100, 100, 100, 0.5)');
@@ -513,8 +514,8 @@ function drawLine3(){
             ]
 
             , canvas: new Canvas($('<canvas/>').appendTo('#chart_cont'))
-            , canvasWidth: 640
-            , canvasHeight: 400
+            , canvasWidth: 320 * scale
+            , canvasHeight: 200 * scale
 
             , enableGrids: true
             , enableLines: true
@@ -525,25 +526,25 @@ function drawLine3(){
             , enableTouchTrace: true
             , enableFPS: false
 
-            , currentValueOffsetY: -20
+            , currentValueOffsetY: -10 * scale
 
             , marginLeft: 0
             , marginRight: 0
                 
-            , paddingRight: 40 
+            , paddingRight: 20 * scale 
 
-            , intersectLineWidth: 5
-            , intersectRadius: 6
+            , intersectLineWidth: 2.5 * scale
+            , intersectRadius: 3 * scale
 
-            , initOffsetX: 6 + 5 + 44
+            , initOffsetX: ( 3 + 2.5 + 22 ) * scale
 
-            , linesLineWidth: 4
+            , linesLineWidth: 2 * scale
 
-            , paddingTop: 60
-            , paddingLeft: 40
-            , paddingBottom: 40
+            , paddingTop: 30 * scale
+            , paddingLeft: 20 * scale
+            , paddingBottom: 20 * scale
 
-            , step: 100
+            , step: 50 * scale
         });
 
     // lineChart.opt.canvas.css('background-color', 'rgba(100, 100, 100, 0.5)');
