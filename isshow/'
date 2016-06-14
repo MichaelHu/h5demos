@@ -1,0 +1,45 @@
+var $cont_1 = $('#cont_1');
+var $title_1 = $('#title_1');
+var $cont_inner_1 = $('#cont_inner_1');
+var $title_inner_1 = $('#title_inner_1');
+
+var $cont_2 = $('#cont_2');
+var $title_2 = $('#title_2');
+var $cont_inner_2 = $('#cont_inner_2');
+var $title_inner_2 = $('#title_inner_2');
+
+var els = [
+        $cont_1
+        , $title_1
+        , $cont_inner_1
+        , $title_inner_1
+        , $cont_2
+        , $title_2
+        , $cont_inner_2
+        , $title_inner_2
+    ];
+
+function getInfo($el){
+    return [
+        $el.selector
+        , $el.css('display')
+    ].join(' : ');
+}
+
+function displayInfo(){
+    var info = [];
+    $.each(els, function(index, item){
+        info.push(getInfo(item)); 
+    });
+    $('#output').html(info.join('<br>'));
+}
+
+displayInfo();
+
+$('#control_panel').on('click', function(e){
+    var target = e.target;
+    if(target && target.tagName == 'INPUT'){
+        console.log(target.id);
+    }
+});
+

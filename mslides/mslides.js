@@ -204,7 +204,6 @@ var animations = {
             , '90': ['pt-page-scaleDown', 'pt-page-scaleUpDown pt-page-delay300']
             , '180': ['pt-page-scaleDown', 'pt-page-scaleUpDown pt-page-delay300']
             , '270': ['pt-page-scaleDown', 'pt-page-scaleUpDown pt-page-delay300']
-            , '180': ['pt-page-scaleDownUp', 'pt-page-scaleUp pt-page-delay300']
         }
 
         , 'scaledownup-scaleup': {

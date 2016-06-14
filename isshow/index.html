@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=320.1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/> 
+        <title>Is it really shown?</title>
+        <link rel="stylesheet" href="../lib/css/reset.css"/>
+        <link rel="stylesheet" href="./isshow.css"/>
+    </head>
+    <body>
+        <div id="workspace">
+            <div id="cont_1">
+                <h1 id="title_1">Title 1</h1>
+                <div id="cont_inner_1">
+                    <h2 id="title_inner_1">Inner Title 1</h2>
+                </div>
+            </div>
+            <div id="cont_2">
+                <h1 id="title_2">Title 2</h1>
+                <div id="cont_inner_2">
+                    <h2 id="title_inner_2">Inner Title 2</h2>
+                </div>
+            </div>
+        </div>
+        <hr>
+
+        <div id="control_panel">
+            <h2>Control Panel</h2>
+            <div>
+                <label>Toogle #cont_1<input type="checkbox" checked id="for_cont_1"></label>
+                <label>Toogle Title 1<input type="checkbox" checked id="for_title_1"></label>
+                <label>Toogle #cont_inner_1<input type="checkbox" checked id="for_cont_inner_1"></label>
+                <label>Toogle Inner Title 1<input type="checkbox" checked id="for_title_inner_1"></label>
+            </div>
+            <div>
+                <label>Toogle #cont_2<input type="checkbox" checked id="for_cont_2"></label>
+                <label>Toogle Title 2<input type="checkbox" checked id="for_title_2"></label>
+                <label>Toogle #cont_inner_2<input type="checkbox" checked id="for_cont_inner_2"></label>
+                <label>Toogle Inner Title 2<input type="checkbox" checked id="for_title_inner_2"></label>
+            </div>
+        </div>
+        <hr>
+
+        <h2>Output</h2>
+        <div id="output"></div>
+    </body>
+    <script src="../lib/zepto.js"></script>
+    <script src="./isshow.js"></script>
+</html>
+
