@@ -38,7 +38,7 @@ module.exports = {
             }
             , { 
                 test: /\.jsx?$/
-                , loader: 'babel?presets[]=es2015,presets[]=react'
+                , loader: 'babel?presets[]=es2015,presets[]=react,presets[]=stage-1'
             }
             , {
                 test: /\.(pn|jp)g$/

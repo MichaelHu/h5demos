@@ -2,6 +2,7 @@ import React from 'react'
 import FilterLink from '../../containers/FilterLink';
 import style from './index.css';
 
+// stateless component
 const Footer = () => (
   <p className="footer">
     Show:
